@@ -24,8 +24,8 @@ public class MarcaServiceImpl implements MarcasService{
     }
 
     @Override
-    public Marcas findByPaisOrigem(String paisOrigem) {
-        return repository.findByPaisOrigem(paisOrigem);
+    public List<Marcas> findByPaisOrigem(String paisOrigem) {
+        return repository.findByPaisOrigem(paisOrigem).list();
     }
 
     @Override

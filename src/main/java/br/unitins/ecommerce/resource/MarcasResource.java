@@ -42,13 +42,13 @@ public class MarcasResource {
     }
 
     @GET
-    @Path("/{nome}")
+    @Path("/porNome/{nome}")
     public Response listarMarcasPorNome(@PathParam("nome") String nomeMarca){
         return Response.ok(service.findByNome(nomeMarca)).build();
     }
 
     @GET
-    @Path("/{paisOrigem}")
+    @Path("/porPais/{paisOrigem}")
     public Response listarMarcasPorPais(@PathParam("paisOrigem") String paisOrigem) {
         return Response.ok(service.findByPaisOrigem(paisOrigem)).build();
     }

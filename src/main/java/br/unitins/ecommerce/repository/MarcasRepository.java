@@ -20,14 +20,13 @@ public class MarcasRepository implements PanacheRepository<Marcas> {
                 .firstResult();
     }
 
-    public Marcas findByPaisOrigem(String paisOrigem) {
+    public PanacheQuery<Marcas> findByPaisOrigem(String paisOrigem) {
         if (paisOrigem == null) return null;
 
         String p = paisOrigem.trim();
         if (p.isEmpty()) return null;
 
-        return find("SELECT m FROM Marcas m WHERE UPPER(m.paisOrigem) = UPPER(?1)", p)
-                .firstResult();
+        return find("SELECT m FROM Marcas m WHERE UPPER(m.paisOrigem) = UPPER(?1)", p);
     }
 
     public List<Marcas> findByNome(String nome) {

@@ -8,7 +8,7 @@ public interface MarcasService {
     
     List<Marcas> findAll();
     Marcas findById(Long id);
-    Marcas findByPaisOrigem(String paisOrigem);
+    List<Marcas> findByPaisOrigem(String paisOrigem);
     List<Marcas> findByNome(String nome);
     Marcas create(Marcas marca);
     void update(Long id, Marcas marca);
