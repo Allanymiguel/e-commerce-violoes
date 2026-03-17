@@ -1,13 +1,14 @@
 package br.unitins.ecommerce.resource;
 
 import br.unitins.ecommerce.model.Marcas;
-// import br.unitins.ecommerce.model.Marcas;
 import br.unitins.ecommerce.service.MarcaServiceImpl;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -47,19 +48,19 @@ public class MarcasResource {
     }
 
     @GET
-    @Path("/pais")
-    public Response listarMarcasPorPais(@PathParam("pais") String paisOrigem) {
+    @Path("/{paisOrigem}")
+    public Response listarMarcasPorPais(@PathParam("paisOrigem") String paisOrigem) {
         return Response.ok(service.findByPaisOrigem(paisOrigem)).build();
     }
 
-    @POST
+    @PUT
     @Transactional
     @Path("/atualizar/{id}")
     public void atualizarMarca(@PathParam("id") Long idMarca, Marcas marca){
         service.update(idMarca, marca);
     }
 
-    @POST
+    @DELETE
     @Transactional
     @Path("/deletar/{id}")
     public void deletarMarca(@PathParam("id") Long idMarca){
