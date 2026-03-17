@@ -1,4 +1,5 @@
 #Maven
+src/main/resources/application-dev.properties
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -43,3 +44,4 @@ nb-configuration.xml
 /.quarkus/cli/plugins/
 # TLS Certificates
 .certs/
+
