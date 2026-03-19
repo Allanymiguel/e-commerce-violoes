@@ -30,7 +30,7 @@ public class MarcasResource {
     @Path("/cadastrar")
     public Response cadastrarMarca(MarcasRequestDTO dto){
         Marcas marca = MarcasMapper.toEntity(dto);
-        return Response.ok(service.create(marca)).build();
+        return Response.status(Response.Status.CREATED).entity(service.create(marca)).build();
     }
 
     @GET
