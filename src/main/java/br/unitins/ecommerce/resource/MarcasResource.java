@@ -1,5 +1,8 @@
 package br.unitins.ecommerce.resource;
 
+import br.unitins.ecommerce.dto.MarcasRequestDTO;
+import br.unitins.ecommerce.dto.MarcasResponseDTO;
+import br.unitins.ecommerce.mapper.MarcasMapper;
 import br.unitins.ecommerce.model.Marcas;
 import br.unitins.ecommerce.service.MarcaServiceImpl;
 import jakarta.inject.Inject;
@@ -26,7 +29,8 @@ public class MarcasResource {
     @POST
     @Transactional
     @Path("/cadastrar")
-    public Response cadastrarMarca(Marcas marca){
+    public Response cadastrarMarca(MarcasRequestDTO dto){
+        Marcas marca = MarcasMapper.toEntity(dto);
         return Response.ok(service.create(marca)).build();
     }
 
