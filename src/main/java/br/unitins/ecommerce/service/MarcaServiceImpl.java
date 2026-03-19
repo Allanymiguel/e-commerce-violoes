@@ -6,6 +6,7 @@ import br.unitins.ecommerce.model.Marcas;
 import br.unitins.ecommerce.repository.MarcasRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class MarcaServiceImpl implements MarcasService{
@@ -34,16 +35,19 @@ public class MarcaServiceImpl implements MarcasService{
     }
 
     @Override
+    @Transactional
     public Marcas create(Marcas marca) {
         return repository.create(marca);
     }
 
     @Override
+    @Transactional
     public void update(Long id, Marcas marca) {
         repository.update(id, marca);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         repository.delete(id);
     }

@@ -27,7 +27,6 @@ public class MarcasResource {
     MarcaServiceImpl service;
 
     @POST
-    @Transactional
     @Path("/cadastrar")
     public Response cadastrarMarca(MarcasRequestDTO dto){
         Marcas marca = MarcasMapper.toEntity(dto);
@@ -58,14 +57,12 @@ public class MarcasResource {
     }
 
     @PUT
-    @Transactional
     @Path("/atualizar/{id}")
     public void atualizarMarca(@PathParam("id") Long idMarca, Marcas marca){
         service.update(idMarca, marca);
     }
 
     @DELETE
-    @Transactional
     @Path("/deletar/{id}")
     public void deletarMarca(@PathParam("id") Long idMarca){
         service.delete(idMarca);
