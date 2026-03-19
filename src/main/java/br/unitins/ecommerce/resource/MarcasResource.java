@@ -1,12 +1,14 @@
 package br.unitins.ecommerce.resource;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.unitins.ecommerce.dto.MarcasRequestDTO;
 import br.unitins.ecommerce.dto.MarcasResponseDTO;
 import br.unitins.ecommerce.mapper.MarcasMapper;
 import br.unitins.ecommerce.model.Marcas;
 import br.unitins.ecommerce.service.MarcaServiceImpl;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -26,17 +28,30 @@ public class MarcasResource {
     @Inject
     MarcaServiceImpl service;
 
+
+
+
     @POST
     @Path("/cadastrar")
-    public Response cadastrarMarca(MarcasRequestDTO dto){
-        Marcas marca = MarcasMapper.toEntity(dto);
-        return Response.status(Response.Status.CREATED).entity(service.create(marca)).build();
+    public MarcasResponseDTO cadastrarMarca(MarcasRequestDTO dto){
+        Marcas marca = service.create(MarcasMapper.toEntity(dto));
+        return MarcasMapper.toResponse(marca);
     }
 
+
+
     @GET
-    public Response listarMarcas(){
-        return Response.ok(service.findAll()).build();
+    public List <MarcasResponseDTO> listarMarcas(){
+        List<MarcasResponseDTO>dtoList = new ArrayList<>();
+        
+        for (Marcas m : service.findAll()) {
+            dtoList.add(MarcasMapper.toResponse(m));
+        }
+
+        return dtoList;
     }
+
+
 
     @GET
     @Path("/{id}")
@@ -44,11 +59,15 @@ public class MarcasResource {
         return Response.ok(service.findById(idMarca)).build();
     }
 
+
+
     @GET
     @Path("/porNome/{nome}")
     public Response listarMarcasPorNome(@PathParam("nome") String nomeMarca){
         return Response.ok(service.findByNome(nomeMarca)).build();
     }
+
+
 
     @GET
     @Path("/porPais/{paisOrigem}")
@@ -56,18 +75,20 @@ public class MarcasResource {
         return Response.ok(service.findByPaisOrigem(paisOrigem)).build();
     }
 
+
+
     @PUT
     @Path("/atualizar/{id}")
     public void atualizarMarca(@PathParam("id") Long idMarca, Marcas marca){
         service.update(idMarca, marca);
     }
 
+
+
     @DELETE
     @Path("/deletar/{id}")
     public void deletarMarca(@PathParam("id") Long idMarca){
         service.delete(idMarca);
     }
-
-
 
 }
