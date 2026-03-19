@@ -6,7 +6,7 @@ import br.unitins.ecommerce.model.Marcas;
 
 public class MarcasMapper {
 
-    public Marcas toEntity (MarcasRequestDTO dto){
+    public static Marcas toEntity (MarcasRequestDTO dto){
 
         if (dto == null){
             return null;
@@ -20,7 +20,7 @@ public class MarcasMapper {
         return marca;
     }
 
-    public MarcasResponseDTO toResponse (Marcas marca) {
+    public static MarcasResponseDTO toResponse (Marcas marca) {
 
         if (marca == null)
             return null;
