@@ -92,8 +92,8 @@ public class MarcasResource {
 
     @PUT
     @Path("/atualizar/{id}")
-    public void atualizarMarca(@PathParam("id") Long idMarca, Marcas marca){
-        service.update(idMarca, marca);
+    public void atualizarMarca(@PathParam("id") Long idMarca, MarcasRequestDTO dto){
+        service.update(idMarca, MarcasMapper.toEntity(dto));
     }
 
 
