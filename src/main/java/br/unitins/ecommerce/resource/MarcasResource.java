@@ -55,24 +55,37 @@ public class MarcasResource {
 
     @GET
     @Path("/{id}")
-    public Response listarMarcasPorId(@PathParam("id") Long idMarca){
-        return Response.ok(service.findById(idMarca)).build();
+    public MarcasResponseDTO listarMarcasPorId(@PathParam("id") Long idMarca){
+
+        return MarcasMapper.toResponse(service.findById(idMarca));
     }
 
 
 
     @GET
     @Path("/porNome/{nome}")
-    public Response listarMarcasPorNome(@PathParam("nome") String nomeMarca){
-        return Response.ok(service.findByNome(nomeMarca)).build();
+    public List <MarcasResponseDTO> listarMarcasPorNome(@PathParam("nome") String nomeMarca){
+        List<MarcasResponseDTO> dtoList = new ArrayList<>();
+        
+        for (Marcas m : service.findByNome(nomeMarca)) {
+            dtoList.add(MarcasMapper.toResponse(m));
+        }
+
+        return dtoList;
     }
 
 
 
     @GET
     @Path("/porPais/{paisOrigem}")
-    public Response listarMarcasPorPais(@PathParam("paisOrigem") String paisOrigem) {
-        return Response.ok(service.findByPaisOrigem(paisOrigem)).build();
+    public List<MarcasResponseDTO> listarMarcasPorPais(@PathParam("paisOrigem") String paisOrigem) {
+        List<MarcasResponseDTO>dtoList = new ArrayList<>();
+        
+        for (Marcas m : service.findByPaisOrigem(paisOrigem)) {
+            dtoList.add(MarcasMapper.toResponse(m));
+        }
+
+        return dtoList;
     }
 
 
