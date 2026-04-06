@@ -1,0 +1,20 @@
+package br.unitins.ecommerce.violao.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
+@Entity
+public class ViolaoNylon extends Violao {
+    
+    @Enumerated(EnumType.STRING)
+    private TipoCordasNylon tipoCordasNylon;
+
+    public TipoCordasNylon getTipoCordasNylon() {
+        return tipoCordasNylon;
+    }
+
+    public void setTipoCordasNylon(TipoCordasNylon tipoCordasNylon) {
+        this.tipoCordasNylon = tipoCordasNylon;
+    }
+}
