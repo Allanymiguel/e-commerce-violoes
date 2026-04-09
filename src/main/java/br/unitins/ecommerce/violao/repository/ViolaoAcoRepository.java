@@ -1,5 +1,6 @@
 package br.unitins.ecommerce.violao.repository;
 
+import br.unitins.ecommerce.violao.model.Violao;
 import br.unitins.ecommerce.violao.model.ViolaoAco;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -25,5 +26,20 @@ public class ViolaoAcoRepository implements PanacheRepository<ViolaoAco> {
         if (violao == null) return null;
         persist(violao);
         return violao;
+    }
+
+    public void update(Long id, ViolaoAco violao) {
+        ViolaoAco existente = find("SELECT m FROM violao m WHERE m.id = ?1", id)
+                .firstResult();
+
+        if (existente == null) {
+            throw new IllegalArgumentException("violao não encontrada para o id: " + id);
+        }
+
+        existente.setNome(violao.getNome());
+        existente.setPrecoBase(violao.getPrecoBase());
+        existente.setAnoFabricacao(violao.getAnoFabricacao());
+        existente.setTipoCordasAco(violao.getTipoCordasAco());
+
     }
 }
