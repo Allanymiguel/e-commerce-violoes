@@ -1,6 +1,5 @@
 package br.unitins.ecommerce.violao.repository;
 
-import br.unitins.ecommerce.violao.model.Violao;
 import br.unitins.ecommerce.violao.model.ViolaoAco;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -14,6 +13,12 @@ public class ViolaoAcoRepository implements PanacheRepository<ViolaoAco> {
         List<ViolaoAco> l = find("SELECT * FROM violoes_aco").list();
         if(l == null) return null;
         return l;
+    }
+
+    public ViolaoAco findById(Long id) {
+        if(id == null) return null;
+        return find("SELECT v FROM violoes_aco v WHERE v.id = ?1", id)
+                .firstResult();
     }
     
     public List<ViolaoAco> findByNome(String nome) {
