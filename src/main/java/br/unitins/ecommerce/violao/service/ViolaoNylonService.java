@@ -11,7 +11,11 @@ public interface ViolaoNylonService {
 
     ViolaoNylonResponseDTO getById(Long id);
 
-    void insert(ViolaoNylonRequestDTO dto);
+    // List<ViolaoAcoResponseDTO> getByName(String nome);
+
+    // List<ViolaoAcoResponseDTO> getByMarca(Long id);
+
+    void create(ViolaoNylonRequestDTO dto);
 
     void update(Long id, ViolaoNylonRequestDTO dto);
 
