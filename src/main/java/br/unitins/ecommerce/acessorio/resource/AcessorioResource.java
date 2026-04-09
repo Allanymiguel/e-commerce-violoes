@@ -35,6 +35,7 @@ public class AcessorioResource {
     }
 
     @GET
+    @Path("/listar")
     public List<AcessorioResponseDTO> listarAcessorios() {
         List<AcessorioResponseDTO> dtoList = new ArrayList<>();
         
@@ -52,7 +53,7 @@ public class AcessorioResource {
     }
 
     @GET
-    @Path("/porNome/{nome}")
+    @Path("/listar/{nome}")
     public List<AcessorioResponseDTO> listarAcessoriosPorNome(@PathParam("nome") String nomeAcessorio) {
         List<AcessorioResponseDTO> dtoList = new ArrayList<>();
         
