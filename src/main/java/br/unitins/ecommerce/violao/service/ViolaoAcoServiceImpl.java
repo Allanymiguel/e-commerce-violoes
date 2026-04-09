@@ -30,7 +30,7 @@ public class ViolaoAcoServiceImpl implements ViolaoAcoService {
 
     @Override
     @Transactional
-    public void insert(ViolaoAcoRequestDTO dto) {
+    public void create(ViolaoAcoRequestDTO dto) {
         ViolaoAco violaoAco = ViolaoAcoMapper.toEntity(dto);
         violaoAcoRepository.persist(violaoAco);
     }
@@ -50,4 +50,5 @@ public class ViolaoAcoServiceImpl implements ViolaoAcoService {
     public void delete(Long id) {
         violaoAcoRepository.deleteById(id);
     }
+
 }

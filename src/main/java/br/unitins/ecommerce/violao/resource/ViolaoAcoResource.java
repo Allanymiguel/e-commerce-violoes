@@ -34,8 +34,8 @@ public class ViolaoAcoResource {
     }
 
     @POST
-    public Response insert(ViolaoAcoRequestDTO dto) {
-        violaoAcoService.insert(dto);
+    public Response create(ViolaoAcoRequestDTO dto) {
+        violaoAcoService.create(dto);
         return Response.status(Response.Status.CREATED).build();
     }
 
