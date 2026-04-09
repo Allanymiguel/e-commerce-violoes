@@ -1,9 +1,9 @@
-package br.unitins.ecommerce.service;
+package br.unitins.ecommerce.marca.service;
 
 import java.util.List;
 
-import br.unitins.ecommerce.model.Marcas;
-import br.unitins.ecommerce.repository.MarcasRepository;
+import br.unitins.ecommerce.marca.model.Marcas;
+import br.unitins.ecommerce.marca.repository.MarcasRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

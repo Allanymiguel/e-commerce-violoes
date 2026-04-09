@@ -1,12 +1,13 @@
-package br.unitins.ecommerce.repository;
+package br.unitins.ecommerce.marca.repository;
 
-import br.unitins.ecommerce.model.Marcas;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+
+import br.unitins.ecommerce.marca.model.Marcas;
 
 @ApplicationScoped
 public class MarcasRepository implements PanacheRepository<Marcas> {

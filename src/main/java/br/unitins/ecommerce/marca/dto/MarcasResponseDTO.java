@@ -1,4 +1,4 @@
-package br.unitins.ecommerce.dto;
+package br.unitins.ecommerce.marca.dto;
 
 public record MarcasResponseDTO(
     Long id,

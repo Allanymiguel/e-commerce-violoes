@@ -1,8 +1,8 @@
-package br.unitins.ecommerce.mapper;
+package br.unitins.ecommerce.marca.mapper;
 
-import br.unitins.ecommerce.dto.MarcasRequestDTO;
-import br.unitins.ecommerce.dto.MarcasResponseDTO;
-import br.unitins.ecommerce.model.Marcas;
+import br.unitins.ecommerce.marca.dto.MarcasRequestDTO;
+import br.unitins.ecommerce.marca.dto.MarcasResponseDTO;
+import br.unitins.ecommerce.marca.model.Marcas;
 
 public class MarcasMapper {
 

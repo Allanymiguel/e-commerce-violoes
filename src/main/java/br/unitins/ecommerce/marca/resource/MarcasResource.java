@@ -1,13 +1,13 @@
-package br.unitins.ecommerce.resource;
+package br.unitins.ecommerce.marca.resource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.ecommerce.dto.MarcasRequestDTO;
-import br.unitins.ecommerce.dto.MarcasResponseDTO;
-import br.unitins.ecommerce.mapper.MarcasMapper;
-import br.unitins.ecommerce.model.Marcas;
-import br.unitins.ecommerce.service.MarcaServiceImpl;
+import br.unitins.ecommerce.marca.dto.MarcasRequestDTO;
+import br.unitins.ecommerce.marca.dto.MarcasResponseDTO;
+import br.unitins.ecommerce.marca.mapper.MarcasMapper;
+import br.unitins.ecommerce.marca.model.Marcas;
+import br.unitins.ecommerce.marca.service.MarcaServiceImpl;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;

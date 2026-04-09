@@ -1,4 +1,4 @@
-package br.unitins.ecommerce.model;
+package br.unitins.ecommerce.marca.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

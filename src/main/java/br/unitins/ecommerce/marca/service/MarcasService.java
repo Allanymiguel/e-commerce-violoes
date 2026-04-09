@@ -1,8 +1,8 @@
-package br.unitins.ecommerce.service;
+package br.unitins.ecommerce.marca.service;
 
 import java.util.List;
 
-import br.unitins.ecommerce.model.Marcas;
+import br.unitins.ecommerce.marca.model.Marcas;
 
 public interface MarcasService {
     
