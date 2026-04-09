@@ -42,4 +42,11 @@ public class ViolaoAcoRepository implements PanacheRepository<ViolaoAco> {
         existente.setTipoCordasAco(violao.getTipoCordasAco());
 
     }
+
+    public void delete(Long id) {
+        ViolaoAco v = findById(id);
+
+        if (v != null)
+            delete(id);
+    }
 }
