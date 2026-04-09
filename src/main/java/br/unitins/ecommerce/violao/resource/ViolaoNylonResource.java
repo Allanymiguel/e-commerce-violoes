@@ -23,31 +23,33 @@ public class ViolaoNylonResource {
     private ViolaoNylonService violaoNylonService;
 
     @GET
+    @Path("/listar")
     public Response getAll() {
         return Response.ok(violaoNylonService.getAll()).build();
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/listar/{id}")
     public Response getById(@PathParam("id") Long id) {
         return Response.ok(violaoNylonService.getById(id)).build();
     }
 
     @POST
-    public Response insert(ViolaoNylonRequestDTO dto) {
-        violaoNylonService.insert(dto);
+    @Path("/cadastrar")
+    public Response create(ViolaoNylonRequestDTO dto) {
+        violaoNylonService.create(dto);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/atualizar/{id}")
     public Response update(@PathParam("id") Long id, ViolaoNylonRequestDTO dto) {
         violaoNylonService.update(id, dto);
         return Response.noContent().build();
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/deletar/{id}")
     public Response delete(@PathParam("id") Long id) {
         violaoNylonService.delete(id);
         return Response.noContent().build();
