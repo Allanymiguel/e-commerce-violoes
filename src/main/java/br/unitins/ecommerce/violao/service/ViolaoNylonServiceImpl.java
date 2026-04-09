@@ -33,7 +33,7 @@ public class ViolaoNylonServiceImpl implements ViolaoNylonService {
 
     @Override
     @Transactional
-    public void insert(ViolaoNylonRequestDTO dto) {
+    public void create(ViolaoNylonRequestDTO dto) {
         ViolaoNylon violaoNylon = ViolaoNylonMapper.toEntity(dto);
         violaoNylonRepository.persist(violaoNylon);
     }
