@@ -1,6 +1,7 @@
 package br.unitins.ecommerce.violao.repository;
 
 import br.unitins.ecommerce.violao.model.ViolaoAco;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -19,5 +20,11 @@ public class ViolaoAcoRepository implements PanacheRepository<ViolaoAco> {
         if (nome == null)
             return null;
         return find("UPPER(nome) LIKE ?1", "%" + nome.toUpperCase() + "%").list();
+    }
+
+    public ViolaoAco create(ViolaoAco violao) {
+        if (violao == null) return null;
+        persist(violao);
+        return violao;
     }
 }
