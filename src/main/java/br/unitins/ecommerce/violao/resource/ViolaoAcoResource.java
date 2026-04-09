@@ -23,31 +23,33 @@ public class ViolaoAcoResource {
     private ViolaoAcoService violaoAcoService;
 
     @GET
+    @Path("/listar")
     public Response getAll() {
         return Response.ok(violaoAcoService.getAll()).build();
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/listar/{id}")
     public Response getById(@PathParam("id") Long id) {
         return Response.ok(violaoAcoService.getById(id)).build();
     }
 
     @POST
+    @Path("/cadastrar")
     public Response create(ViolaoAcoRequestDTO dto) {
         violaoAcoService.create(dto);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/atualizar/{id}")
     public Response update(@PathParam("id") Long id, ViolaoAcoRequestDTO dto) {
         violaoAcoService.update(id, dto);
         return Response.noContent().build();
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/deletar/{id}")
     public Response delete(@PathParam("id") Long id) {
         violaoAcoService.delete(id);
         return Response.noContent().build();
