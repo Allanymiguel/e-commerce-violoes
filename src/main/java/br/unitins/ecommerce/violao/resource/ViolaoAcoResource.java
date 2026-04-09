@@ -1,7 +1,7 @@
 package br.unitins.ecommerce.violao.resource;
 
 import br.unitins.ecommerce.violao.dto.ViolaoAcoRequestDTO;
-import br.unitins.ecommerce.violao.service.ViolaoAcoService;
+import br.unitins.ecommerce.violao.service.ViolaoAcoServiceImpl;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -20,38 +20,38 @@ import jakarta.ws.rs.core.Response;
 public class ViolaoAcoResource {
 
     @Inject
-    private ViolaoAcoService violaoAcoService;
+    private ViolaoAcoServiceImpl service;
 
     @GET
     @Path("/listar")
     public Response getAll() {
-        return Response.ok(violaoAcoService.getAll()).build();
+        return Response.ok(service.getAll()).build();
     }
 
     @GET
     @Path("/listar/{id}")
     public Response getById(@PathParam("id") Long id) {
-        return Response.ok(violaoAcoService.getById(id)).build();
+        return Response.ok(service.getById(id)).build();
     }
 
     @POST
     @Path("/cadastrar")
     public Response create(ViolaoAcoRequestDTO dto) {
-        violaoAcoService.create(dto);
+        service.create(dto);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
     @Path("/atualizar/{id}")
     public Response update(@PathParam("id") Long id, ViolaoAcoRequestDTO dto) {
-        violaoAcoService.update(id, dto);
+        service.update(id, dto);
         return Response.noContent().build();
     }
 
     @DELETE
     @Path("/deletar/{id}")
     public Response delete(@PathParam("id") Long id) {
-        violaoAcoService.delete(id);
+        service.delete(id);
         return Response.noContent().build();
     }
 }
