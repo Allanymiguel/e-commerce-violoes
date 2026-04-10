@@ -35,6 +35,7 @@ public class PerfilBracoResource {
     }
 
     @GET
+    @Path("/listar")
     public List<PerfilBracoResponseDTO> listarPerfisBraco(){
         List<PerfilBracoResponseDTO> dtoList = new ArrayList<>();
         
@@ -46,14 +47,14 @@ public class PerfilBracoResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/listar/{id}")
     public PerfilBracoResponseDTO listarPerfilBracoPorId(@PathParam("id") Long idPerfilBraco){
 
         return PerfilBracoMapper.toResponse(service.findById(idPerfilBraco));
     }
 
     @GET
-    @Path("/porNome/{nome}")
+    @Path("/listar/{nome}")
     public List<PerfilBracoResponseDTO> listarPerfisBracoPorNome(@PathParam("nome") String nomePerfilBraco){
         List<PerfilBracoResponseDTO> dtoList = new ArrayList<>();
         
