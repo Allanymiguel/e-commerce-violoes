@@ -35,6 +35,7 @@ public class MadeiraResource {
     }
 
     @GET
+    @Path("/listar")
     public List<MadeiraResponseDTO> listarMadeiras(){
         List<MadeiraResponseDTO> dtoList = new ArrayList<>();
         
@@ -46,13 +47,13 @@ public class MadeiraResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/listar/{id}")
     public MadeiraResponseDTO listarMadeiraPorId(@PathParam("id") Long idMadeira){
         return MadeiraMapper.toResponse(service.findById(idMadeira));
     }
 
     @GET
-    @Path("/porTipo/{tipo}")
+    @Path("/listar/{tipo}")
     public List<MadeiraResponseDTO> listarMadeirasPorTipo(@PathParam("tipo") String tipoMadeira){
         List<MadeiraResponseDTO> dtoList = new ArrayList<>();
         
