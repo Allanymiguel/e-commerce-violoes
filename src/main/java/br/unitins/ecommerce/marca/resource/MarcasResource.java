@@ -27,9 +27,6 @@ public class MarcasResource {
     @Inject
     MarcaServiceImpl service;
 
-
-
-
     @POST
     @Path("/cadastrar")
     public MarcasResponseDTO cadastrarMarca(MarcasRequestDTO dto){
@@ -37,9 +34,8 @@ public class MarcasResource {
         return MarcasMapper.toResponse(marca);
     }
 
-
-
     @GET
+    @Path("/listar")
     public List <MarcasResponseDTO> listarMarcas(){
         List<MarcasResponseDTO>dtoList = new ArrayList<>();
         
@@ -50,19 +46,15 @@ public class MarcasResource {
         return dtoList;
     }
 
-
-
     @GET
-    @Path("/{id}")
+    @Path("/listar/{id}")
     public MarcasResponseDTO listarMarcasPorId(@PathParam("id") Long idMarca){
 
         return MarcasMapper.toResponse(service.findById(idMarca));
     }
 
-
-
     @GET
-    @Path("/porNome/{nome}")
+    @Path("/listar/nome/{nome}")
     public List <MarcasResponseDTO> listarMarcasPorNome(@PathParam("nome") String nomeMarca){
         List<MarcasResponseDTO> dtoList = new ArrayList<>();
         
@@ -76,7 +68,7 @@ public class MarcasResource {
 
 
     @GET
-    @Path("/porPais/{paisOrigem}")
+    @Path("/listar/pais/{paisOrigem}")
     public List<MarcasResponseDTO> listarMarcasPorPais(@PathParam("paisOrigem") String paisOrigem) {
         List<MarcasResponseDTO>dtoList = new ArrayList<>();
         
