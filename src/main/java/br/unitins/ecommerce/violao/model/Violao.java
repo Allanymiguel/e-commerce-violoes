@@ -15,6 +15,7 @@ import java.util.List;
 import br.unitins.ecommerce.acessorio.model.Acessorio;
 import br.unitins.ecommerce.madeira.model.Madeira;
 import br.unitins.ecommerce.marca.model.Marcas;
+import br.unitins.ecommerce.perfilBraco.model.PerfilBraco;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -49,6 +50,11 @@ public abstract class Violao {
     @ManyToOne
     @JoinColumn(name = "id_marca")
     private Marcas marca;
+
+    // Agregação: Um perfil de braço possui muitos violões, um violão possui um perfil de braço (1:N)
+    @ManyToOne
+    @JoinColumn(name = "id_perfil_braco")
+    private PerfilBraco perfilBraco;
 
     public Long getId() {
         return id;
@@ -97,5 +103,13 @@ public abstract class Violao {
 
     public void setMarca(Marcas marca) {
         this.marca = marca;
+    }
+
+    public PerfilBraco getPerfilBraco() {
+        return perfilBraco;
+    }
+
+    public void setPerfilBraco(PerfilBraco perfilBraco) {
+        this.perfilBraco = perfilBraco;
     }
 }

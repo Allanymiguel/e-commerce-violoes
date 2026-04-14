@@ -4,6 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.unitins.ecommerce.violao.model.Violao;
 
 @Entity
 public class PerfilBraco {
@@ -17,6 +23,10 @@ public class PerfilBraco {
     private String formato;
 
     private Double espessura;
+
+    @OneToMany(mappedBy = "perfilBraco")
+    @JsonIgnore
+    private List<Violao> violoes;
 
     public Long getId() {
         return id;
@@ -48,5 +58,13 @@ public class PerfilBraco {
 
     public void setEspessura(Double espessura) {
         this.espessura = espessura;
+    }
+
+    public List<Violao> getVioloes() {
+        return violoes;
+    }
+
+    public void setVioloes(List<Violao> violoes) {
+        this.violoes = violoes;
     }
 }
