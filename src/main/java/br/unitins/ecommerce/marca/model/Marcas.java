@@ -5,6 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.unitins.ecommerce.violao.model.Violao;
 
 @Entity
 public class Marcas {
@@ -21,8 +26,10 @@ public class Marcas {
     @Column(name = "url_website")
     private String website;
 
+    @OneToMany(mappedBy = "marca")
+    @JsonIgnore
+    private List<Violao> violoes;
     
-
     public Long getId() {
         return id;
     }
@@ -55,6 +62,11 @@ public class Marcas {
         this.website = website;
     }
 
-    
-    
+    public List<Violao> getVioloes() {
+        return violoes;
+    }
+
+    public void setVioloes(List<Violao> violoes) {
+        this.violoes = violoes;
+    }
 }

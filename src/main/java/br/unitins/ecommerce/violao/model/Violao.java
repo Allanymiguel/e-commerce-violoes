@@ -14,6 +14,7 @@ import java.util.List;
 
 import br.unitins.ecommerce.acessorio.model.Acessorio;
 import br.unitins.ecommerce.madeira.model.Madeira;
+import br.unitins.ecommerce.marca.model.Marcas;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -43,6 +44,11 @@ public abstract class Violao {
         inverseJoinColumns = @JoinColumn(name = "id_acessorio")
     )
     private List<Acessorio> acessorios;
+
+    // Agregação: Uma marca possui muitos violões, um violão pertence a uma marca (1:N)
+    @ManyToOne
+    @JoinColumn(name = "id_marca")
+    private Marcas marca;
 
     public Long getId() {
         return id;
@@ -83,5 +89,13 @@ public abstract class Violao {
 
     public void setAcessorios(List<Acessorio> acessorios) {
         this.acessorios = acessorios;
+    }
+
+    public Marcas getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marcas marca) {
+        this.marca = marca;
     }
 }
