@@ -6,6 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.ManyToOne;
+
+import br.unitins.ecommerce.madeira.model.Madeira;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -17,6 +20,9 @@ public abstract class Violao {
     private String nome;
     private Double precoBase;
     private Integer anoFabricacao;
+
+    @ManyToOne
+    private Madeira madeira;
 
     public Long getId() {
         return id;
@@ -41,5 +47,13 @@ public abstract class Violao {
     }
     public void setAnoFabricacao(Integer anoFabricacao) {
         this.anoFabricacao = anoFabricacao;
+    }
+
+    public Madeira getMadeira() {
+        return madeira;
+    }
+
+    public void setMadeira(Madeira madeira) {
+        this.madeira = madeira;
     }
 }
