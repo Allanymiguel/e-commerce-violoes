@@ -28,16 +28,9 @@ public abstract class Violao {
     private Double precoBase;
     private Integer anoFabricacao;
 
-    /*
-    Pensando na informação não aspecto físico: madeira não é uma composição 
-    por existir à parte de Violão como nos filtros de pesquisa. 
-    
-    O violão inteiro é feito com apenas um tipo de madeira.
-     */
     @ManyToOne
     private Madeira madeira;
     
-    // Agregação: Acessórios não são vendidos apenas com violões, além de ser uma opção de filtro de pesquisa.
     @ManyToMany
     @JoinTable(
         name = "violao_acessorio",
@@ -46,12 +39,10 @@ public abstract class Violao {
     )
     private List<Acessorio> acessorios;
 
-    // Agregação: Uma marca possui muitos violões, um violão pertence a uma marca (1:N)
     @ManyToOne
     @JoinColumn(name = "id_marca")
     private Marcas marca;
 
-    // Agregação: Um perfil de braço possui muitos violões, um violão possui um perfil de braço (1:N)
     @ManyToOne
     @JoinColumn(name = "id_perfil_braco")
     private PerfilBraco perfilBraco;
