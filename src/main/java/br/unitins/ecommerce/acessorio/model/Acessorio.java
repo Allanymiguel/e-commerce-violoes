@@ -5,6 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.unitins.ecommerce.violao.model.Violao;
 
 @Entity
 public class Acessorio {
@@ -22,6 +27,10 @@ public class Acessorio {
 
     @Column(name = "preco_unitario")
     private Double precoUnitario;
+
+    @ManyToMany(mappedBy = "acessorios")
+    @JsonIgnore
+    private List<Violao> violoes;
 
     public Long getId() {
         return id;
@@ -61,5 +70,13 @@ public class Acessorio {
 
     public void setPrecoUnitario(Double precoUnitario) {
         this.precoUnitario = precoUnitario;
+    }
+
+    public List<Violao> getVioloes() {
+        return violoes;
+    }
+
+    public void setVioloes(List<Violao> violoes) {
+        this.violoes = violoes;
     }
 }
