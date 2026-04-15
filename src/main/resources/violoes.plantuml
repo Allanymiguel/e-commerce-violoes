@@ -1,0 +1,109 @@
+@startuml violoes
+!define RECTANGLE
+skinparam classAttributeIconSize 0
+
+interface Gerenciavel {
+  + cadastrar(): void
+  + consultar(): Object
+  + atualizar(): void
+  + excluir(): void
+}
+
+Abstract class Violao {
+  - id: Long
+  - nome: String
+  - precoBase: BigDecimal
+  - anoFabricacao: Integer
+}
+
+together{
+  class ViolaoAco {
+  }
+  enum GaugeCorda {
+    EXTRA_LIGHT
+    LIGHT
+    MEDIUM
+    HEAVY
+  }
+
+}
+
+together{
+  class ViolaoNylon {
+  }
+  enum TensaoCorda {
+    BAIXA
+    MEDIA
+    ALTA
+  }
+}
+
+class Marca {
+  - id: Long
+  - nome: String
+  - paisOrigem: String
+  - website: String
+}
+
+class PerfilBraco {
+  - id: Long
+  - nome: String
+  - formato: String
+  - espessura: Double
+}
+
+class Madeira {
+  - id: Long
+  - tipo: String
+  - densidade: String
+  - sonoridade: String
+}
+
+enum PosicaoMadeira {
+  TAMPO
+  LATERAL
+  FUNDO
+}
+
+class Acessorio {
+  - id: Long
+  - nome: String
+  - descricao: String
+  - quantidadeEstoque: Integer
+  - precoUnitario: BigDecimal
+}
+
+class ComposicaoMadeira {
+  - quantidade: Integer
+}
+
+class ViolaoAcessorio {
+  - quantidade: Integer
+}
+
+' Relacionamentos
+Gerenciavel <|.. Violao
+Gerenciavel <|.. Marca
+Gerenciavel <|.. Madeira
+Gerenciavel <|.. Acessorio
+Gerenciavel <|.. PerfilBraco
+
+Violao <|-down- ViolaoNylon
+Violao <|-down- ViolaoAco
+
+Violao "*" o-- "1" PerfilBraco
+Violao "*" -up-> "1" Marca
+
+ViolaoNylon -[hidden]- TensaoCorda
+ViolaoNylon *-- TensaoCorda
+ViolaoAco -[hidden]- GaugeCorda
+ViolaoAco *-- GaugeCorda
+
+Violao "1" o-left- "*" ComposicaoMadeira
+Madeira "1" <-- "*" ComposicaoMadeira
+ComposicaoMadeira -down-> PosicaoMadeira
+
+Violao "1" o--right- "*" ViolaoAcessorio
+Acessorio "1" <-down- "*" ViolaoAcessorio
+
+@enduml
