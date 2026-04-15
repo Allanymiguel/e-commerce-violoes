@@ -2,7 +2,8 @@
 !define RECTANGLE
 skinparam classAttributeIconSize 0
 
-'Essa classe é genérica pois cada classe Service terá a sua própria interface
+'Essa interface é genérica pois cada classe "Service" terá a sua própria interface
+'This is a generic interface because the Service classes of each package will implement it's own
 interface Service<T> {
     + listAll(): List<T>
     + findById(id: Long): T
