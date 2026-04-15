@@ -29,6 +29,7 @@ public abstract class Violao {
     private Integer anoFabricacao;
 
     @ManyToOne
+    @JoinColumn(name = "id_madeira")
     private Madeira madeira;
     
     @ManyToMany
