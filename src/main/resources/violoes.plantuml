@@ -2,11 +2,14 @@
 !define RECTANGLE
 skinparam classAttributeIconSize 0
 
-interface Gerenciavel {
-  + cadastrar(): void
-  + consultar(): Object
-  + atualizar(): void
-  + excluir(): void
+'Essa classe é genérica pois cada classe Service terá a sua própria interface
+interface Service<T> {
+    + listAll(): List<T>
+    + findById(id: Long): T
+    + findByName(name: String): List<T>
+    + create(entity: T): T
+    + update(id: Long, entity: T): T
+    + deleteById(id: Long): void
 }
 
 Abstract class Violao {
@@ -59,12 +62,6 @@ class Madeira {
   - sonoridade: String
 }
 
-enum PosicaoMadeira {
-  TAMPO
-  LATERAL
-  FUNDO
-}
-
 class Acessorio {
   - id: Long
   - nome: String
@@ -73,20 +70,12 @@ class Acessorio {
   - precoUnitario: BigDecimal
 }
 
-class ComposicaoMadeira {
-  - quantidade: Integer
-}
-
-class ViolaoAcessorio {
-  - quantidade: Integer
-}
-
 ' Relacionamentos
-Gerenciavel <|.. Violao
-Gerenciavel <|.. Marca
-Gerenciavel <|.. Madeira
-Gerenciavel <|.. Acessorio
-Gerenciavel <|.. PerfilBraco
+Service <|.. Violao
+Service <|.. Marca
+Service <|.. Madeira
+Service <|.. Acessorio
+Service <|.. PerfilBraco
 
 Violao <|-down- ViolaoNylon
 Violao <|-down- ViolaoAco
@@ -99,11 +88,8 @@ ViolaoNylon *-- TensaoCorda
 ViolaoAco -[hidden]- GaugeCorda
 ViolaoAco *-- GaugeCorda
 
-Violao "1" o-left- "*" ComposicaoMadeira
-Madeira "1" <-- "*" ComposicaoMadeira
-ComposicaoMadeira -down-> PosicaoMadeira
+Violao "1" o-left- "*" Madeira
 
-Violao "1" o--right- "*" ViolaoAcessorio
-Acessorio "1" <-down- "*" ViolaoAcessorio
+Violao "*" o--right- "*" Acessorio
 
 @enduml
