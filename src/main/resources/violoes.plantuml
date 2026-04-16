@@ -2,17 +2,6 @@
 !define RECTANGLE
 skinparam classAttributeIconSize 0
 
-'Essa interface é genérica pois cada classe "Service" terá a sua própria interface
-'This is a generic interface because the Service classes of each package will implement it's own
-interface Service<T> {
-    + listAll(): List<T>
-    + findById(id: Long): T
-    + findByName(name: String): List<T>
-    + create(entity: T): T
-    + update(id: Long, entity: T): T
-    + deleteById(id: Long): void
-}
-
 Abstract class Violao {
   - id: Long
   - nome: String
@@ -72,17 +61,12 @@ class Acessorio {
 }
 
 ' Relacionamentos
-Service <|.. Violao
-Service <|.. Marca
-Service <|.. Madeira
-Service <|.. Acessorio
-Service <|.. PerfilBraco
 
 Violao <|-down- ViolaoNylon
 Violao <|-down- ViolaoAco
 
 Violao "*" o-- "1" PerfilBraco
-Violao "*" -up-> "1" Marca
+Violao "*" o-up- "1" Marca
 
 ViolaoNylon -[hidden]- TensaoCorda
 ViolaoNylon *-- TensaoCorda
