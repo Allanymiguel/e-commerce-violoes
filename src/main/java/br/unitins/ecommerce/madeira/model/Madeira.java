@@ -1,5 +1,9 @@
 package br.unitins.ecommerce.madeira.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.OneToMany;
+import java.util.List;
+import br.unitins.ecommerce.violao.model.Violao;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +21,10 @@ public class Madeira {
     private String densidade;
 
     private String sonoridade;
+
+    @OneToMany(mappedBy = "madeira")
+    @JsonIgnore
+    private List<Violao> violoes;
 
     public Long getId() {
         return id;
@@ -48,5 +56,13 @@ public class Madeira {
 
     public void setSonoridade(String sonoridade) {
         this.sonoridade = sonoridade;
+    }
+    
+    public List<Violao> getVioloes() {
+    return violoes;
+    }
+
+    public void setVioloes(List<Violao> violoes) {
+        this.violoes = violoes;
     }
 }
