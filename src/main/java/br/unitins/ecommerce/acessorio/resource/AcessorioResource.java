@@ -49,8 +49,8 @@ public class AcessorioResource {
 
     @GET
     @Path("/{id}")
-    public AcessorioResponseDTO listarAcessorioPorId(@PathParam("id") Long idAcessorio) {
-        return AcessorioMapper.toResponse(service.findById(idAcessorio));
+    public Response listarAcessorioPorId(@PathParam("id") Long idAcessorio) {
+        return Response.ok(AcessorioMapper.toResponse(service.findById(idAcessorio))).build();
     }
 
     @GET
