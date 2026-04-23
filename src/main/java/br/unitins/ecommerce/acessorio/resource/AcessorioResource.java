@@ -67,8 +67,9 @@ public class AcessorioResource {
 
     @PUT
     @Path("/atualizar/{id}")
-    public void atualizarAcessorio(@PathParam("id") Long idAcessorio, AcessorioRequestDTO dto) {
+    public Response atualizarAcessorio(@PathParam("id") Long idAcessorio, AcessorioRequestDTO dto) {
         service.update(idAcessorio, AcessorioMapper.toEntity(dto));
+        return Response.noContent().build();
     }
 
     @DELETE
