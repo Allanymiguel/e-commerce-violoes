@@ -74,7 +74,8 @@ public class AcessorioResource {
 
     @DELETE
     @Path("/deletar/{id}")
-    public void deletarAcessorio(@PathParam("id") Long idAcessorio) {
+    public Response deletarAcessorio(@PathParam("id") Long idAcessorio) {
         service.delete(idAcessorio);
+        return Response.noContent().build();
     }
 }
