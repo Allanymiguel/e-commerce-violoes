@@ -19,6 +19,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/acessorios")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,9 +31,8 @@ public class AcessorioResource {
 
     @POST
     @Path("/cadastrar")
-    public AcessorioResponseDTO cadastrarAcessorio(AcessorioRequestDTO dto) {
-        Acessorio acessorio = service.create(AcessorioMapper.toEntity(dto));
-        return AcessorioMapper.toResponse(acessorio);
+    public Response cadastrarAcessorio(AcessorioRequestDTO dto) {
+        return Response.status(Status.CREATED).entity(service.create(AcessorioMapper.toEntity(dto))).build();
     }
 
     @GET
