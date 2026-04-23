@@ -6,6 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,13 +22,19 @@ public class Acessorio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @NotBlank
     private String nome;
 
     private String descricao;
 
+    @NotNull
+    @PositiveOrZero
     @Column(name = "quantidade_estoque")
     private Integer quantidadeEstoque;
 
+    @NotNull
+    @Positive
     @Column(name = "preco_unitario")
     private Double precoUnitario;
 

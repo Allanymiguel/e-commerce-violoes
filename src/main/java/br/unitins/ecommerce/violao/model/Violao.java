@@ -12,6 +12,11 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+
 import br.unitins.ecommerce.acessorio.model.Acessorio;
 import br.unitins.ecommerce.madeira.model.Madeira;
 import br.unitins.ecommerce.marca.model.Marcas;
@@ -24,8 +29,16 @@ public abstract class Violao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
     private String nome;
+
+    @NotNull
+    @Positive
     private Double precoBase;
+
+    @NotNull
+    @PositiveOrZero
     private Integer anoFabricacao;
 
     @ManyToOne
