@@ -37,14 +37,14 @@ public class AcessorioResource {
 
     @GET
     @Path("/listar")
-    public List<AcessorioResponseDTO> listarAcessorios() {
+    public Response listarAcessorios() {
         List<AcessorioResponseDTO> dtoList = new ArrayList<>();
         
         for (Acessorio a : service.findAll()) {
             dtoList.add(AcessorioMapper.toResponse(a));
         }
 
-        return dtoList;
+        return Response.ok(dtoList).build();
     }
 
     @GET
