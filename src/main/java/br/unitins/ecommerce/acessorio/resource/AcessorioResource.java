@@ -18,6 +18,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/acessorios")
 @Produces(MediaType.APPLICATION_JSON)
@@ -54,14 +56,14 @@ public class AcessorioResource {
 
     @GET
     @Path("/listar/{nome}")
-    public List<AcessorioResponseDTO> listarAcessoriosPorNome(@PathParam("nome") String nomeAcessorio) {
+    public Response listarAcessoriosPorNome(@PathParam("nome") String nomeAcessorio) {
         List<AcessorioResponseDTO> dtoList = new ArrayList<>();
         
         for (Acessorio a : service.findByNome(nomeAcessorio)) {
             dtoList.add(AcessorioMapper.toResponse(a));
         }
 
-        return dtoList;
+        return Response.ok(dtoList).build();
     }
 
     @PUT
