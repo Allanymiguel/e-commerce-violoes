@@ -56,14 +56,14 @@ public class MadeiraResource {
 
     @GET
     @Path("/listar/{tipo}")
-    public List<MadeiraResponseDTO> listarMadeirasPorTipo(@PathParam("tipo") String tipoMadeira){
+    public Response listarMadeirasPorTipo(@PathParam("tipo") String tipoMadeira){
         List<MadeiraResponseDTO> dtoList = new ArrayList<>();
         
         for (Madeira m : service.findByTipo(tipoMadeira)) {
             dtoList.add(MadeiraMapper.toResponse(m));
         }
 
-        return dtoList;
+        return Response.ok(dtoList).build();
     }
 
     @PUT
