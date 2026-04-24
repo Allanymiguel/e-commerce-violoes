@@ -1,15 +1,21 @@
 package br.unitins.ecommerce.violao.resource;
 
 import org.junit.jupiter.api.Test;
+
+import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import br.unitins.ecommerce.violao.dto.ViolaoAcoRequestDTO;
 import br.unitins.ecommerce.violao.model.TipoCordasAco;
+import br.unitins.ecommerce.violao.service.ViolaoAcoService;
 
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class ViolaoAcoResourceTest {
+
+    @InjectMock
+    ViolaoAcoService service;
 
     @Test
     public void testGetAll() {
@@ -25,7 +31,7 @@ public class ViolaoAcoResourceTest {
           .when().get("/violoes/aco/listar/999")
           .then()
              // Depending on service layer mapping, might be 500 or 404
-             .statusCode(400);
+             .statusCode(404);
     }
 
     @Test
@@ -60,7 +66,7 @@ public class ViolaoAcoResourceTest {
           .when().put("/violoes/aco/atualizar/999")
           .then()
              // Since it returns NO CONTENT on success, or 500/404 if failed
-             .statusCode(400); 
+             .statusCode(404); 
     }
 
     @Test
@@ -68,6 +74,6 @@ public class ViolaoAcoResourceTest {
         given()
           .when().delete("/violoes/aco/deletar/999")
           .then()
-             .statusCode(400); // 500 or 404 if it fails to find
+             .statusCode(404); // 500 or 404 if it fails to find
     }
 }

@@ -37,18 +37,24 @@ public class ViolaoAcoServiceImpl implements ViolaoAcoService {
 
     @Override
     @Transactional
-    public void update(Long id, ViolaoAcoRequestDTO dto) {
+    public boolean update(Long id, ViolaoAcoRequestDTO dto) {
         ViolaoAco violaoAco = violaoAcoRepository.findById(id);
+        if(violaoAco == null) return false;
         violaoAco.setNome(dto.nome());
         violaoAco.setPrecoBase(dto.precoBase());
         violaoAco.setAnoFabricacao(dto.anoFabricacao());
         violaoAco.setTipoCordasAco(dto.tipoCordasAco());
+
+        return true;
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        ViolaoAcoResponseDTO v = getById(id);
+        if(v == null) return false;
         violaoAcoRepository.deleteById(id);
+        return true;
     }
 
 }

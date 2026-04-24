@@ -17,7 +17,7 @@ public interface ViolaoAcoService {
 
     void create(ViolaoAcoRequestDTO dto);
 
-    void update(Long id, ViolaoAcoRequestDTO dto);
+    boolean update(Long id, ViolaoAcoRequestDTO dto);
 
-    void delete(Long id);
+    boolean delete(Long id);
 }
