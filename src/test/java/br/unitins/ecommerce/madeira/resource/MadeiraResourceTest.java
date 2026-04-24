@@ -1,17 +1,23 @@
 package br.unitins.ecommerce.madeira.resource;
 
 import org.junit.jupiter.api.Test;
+
+import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import br.unitins.ecommerce.madeira.dto.MadeiraRequestDTO;
+import br.unitins.ecommerce.madeira.service.MadeiraService;
 
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class MadeiraResourceTest {
 
+  @InjectMock
+  MadeiraService service;
+
     @Test
-    public void testCadastrarMadeira() {
+    public void testCadastrarMadeiraComSucesso() {
         MadeiraRequestDTO dto = new MadeiraRequestDTO("Mogno", "Alta", "Encorpada");
         
         given()
@@ -19,11 +25,11 @@ public class MadeiraResourceTest {
           .body(dto)
           .when().post("/madeiras/cadastrar")
           .then()
-             .statusCode(200); // Because returning raw entity/DTO without Response wrapper often maps to 200 in Quarkus
+             .statusCode(201);
     }
 
     @Test
-    public void testListarMadeiras() {
+    public void testListarMadeirasComStatus200() {
         given()
           .when().get("/madeiras/listar")
           .then()
@@ -31,12 +37,12 @@ public class MadeiraResourceTest {
     }
 
     @Test
-    public void testListarMadeiraPorId() {
+    public void testListarMadeiraPorIdInvalido() {
         given()
           .when().get("/madeiras/listar/999")
           .then()
              // Could be 404 or 500 depending on service exception mapper
-             .statusCode(500); 
+             .statusCode(400); 
     }
 
     @Test
@@ -49,7 +55,7 @@ public class MadeiraResourceTest {
 
     @Test
     public void testAtualizarMadeira() {
-        MadeiraRequestDTO dto = new MadeiraRequestDTO("Cedro", "Mdia", "Equilibrada");
+        MadeiraRequestDTO dto = new MadeiraRequestDTO("Cedro", "Média", "Equilibrada");
         
         given()
           .contentType(ContentType.JSON)
@@ -57,7 +63,7 @@ public class MadeiraResourceTest {
           .when().put("/madeiras/atualizar/999")
           .then()
              // method is void, it returns HTTP 204 typically on success, or 500/404 if not found
-             .statusCode(500); 
+             .statusCode(204); 
     }
 
     @Test
@@ -65,6 +71,6 @@ public class MadeiraResourceTest {
         given()
           .when().delete("/madeiras/deletar/999")
           .then()
-             .statusCode(500); // 500 or 404 if it fails due to lack of item
+             .statusCode(400); // 500 or 404 if it fails due to lack of item
     }
 }

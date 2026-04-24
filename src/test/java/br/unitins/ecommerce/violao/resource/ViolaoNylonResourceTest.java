@@ -24,7 +24,7 @@ public class ViolaoNylonResourceTest {
         given()
           .when().get("/violoes/nylon/listar/999")
           .then()
-             .statusCode(500);
+             .statusCode(400);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class ViolaoNylonResourceTest {
           .body(dto)
           .when().put("/violoes/nylon/atualizar/999")
           .then()
-             .statusCode(500);
+             .statusCode(400);
     }
 
     @Test
@@ -66,6 +66,6 @@ public class ViolaoNylonResourceTest {
         given()
           .when().delete("/violoes/nylon/deletar/999")
           .then()
-             .statusCode(500);
+             .statusCode(400);
     }
 }

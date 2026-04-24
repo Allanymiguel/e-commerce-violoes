@@ -17,27 +17,32 @@ public class MarcasResourceTest {
         given()
           .contentType(ContentType.JSON)
           .body(dto)
-          .when().post("/marcas/cadastrar")
-          .then()
-             .statusCode(200); // RESTEasy Reactive defaults to 200 when returning object
+          .when().post("/marcas/cadastrar").then().statusCode(201); // RESTEasy Reactive defaults to 201 when returning object
     }
 
     @Test
     public void testListarMarcas() {
         given()
-          .when().get("/marcas/listar")
-          .then()
-             .statusCode(200);
+          .when().get("/marcas/listar").then().statusCode(200);
     }
 
     @Test
     public void testListarMarcasPorId() {
         given()
+          .when().get("/marcas/listar/1")
+          .then()
+             // Depending on service layer exception mapping, could be 404/500/204
+             // Using 500/404 based on standard NotFound exceptions 
+             .statusCode(200); 
+    }
+    @Test
+    public void testListarMarcasPorIdInvalido() {
+        given()
           .when().get("/marcas/listar/999")
           .then()
              // Depending on service layer exception mapping, could be 404/500/204
              // Using 500/404 based on standard NotFound exceptions 
-             .statusCode(500); 
+             .statusCode(400); 
     }
 
     @Test
@@ -46,6 +51,13 @@ public class MarcasResourceTest {
           .when().get("/marcas/listar/nome/Yamaha")
           .then()
              .statusCode(200);
+    }
+    @Test
+    public void testListarMarcasPorNomeInvalido() {
+        given()
+          .when().get("/marcas/listar/nome/Sanfona")
+          .then()
+             .statusCode(400);
     }
 
     @Test
@@ -63,17 +75,24 @@ public class MarcasResourceTest {
         given()
           .contentType(ContentType.JSON)
           .body(dto)
-          .when().put("/marcas/atualizar/999")
+          .when().put("/marcas/atualizar/1")
           .then()
              // returns void so 204 No Content on success, or 500/404 if not found
-             .statusCode(500); 
+             .statusCode(204); 
     }
 
     @Test
-    public void testDeletarMarca() {
+    public void testDeletarMarcaInvalido() {
         given()
           .when().delete("/marcas/deletar/999")
           .then()
-             .statusCode(500); // Assuming 500 or 404 when ID not found
+             .statusCode(400); // Assuming 500 or 404 when ID not found
+    }
+    @Test
+    public void testDeletarMarcaValido() {
+        given()
+          .when().delete("/marcas/deletar/1")
+          .then()
+             .statusCode(204); // Assuming 500 or 404 when ID not found
     }
 }

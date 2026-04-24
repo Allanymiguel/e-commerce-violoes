@@ -19,7 +19,7 @@ public class PerfilBracoResourceTest {
           .body(dto)
           .when().post("/perfis-braco/cadastrar")
           .then()
-             .statusCode(200); // RESTEasy Reactive usually maps returning an object to 200 OK
+             .statusCode(201); // RESTEasy Reactive usually maps returning an object to 200 OK
     }
 
     @Test
@@ -36,7 +36,7 @@ public class PerfilBracoResourceTest {
           .when().get("/perfis-braco/listar/999")
           .then()
              // Depending on service layer, could be 404 Not Found or 500 when missing
-             .statusCode(500); 
+             .statusCode(400); 
     }
 
     @Test
@@ -57,7 +57,7 @@ public class PerfilBracoResourceTest {
           .when().put("/perfis-braco/atualizar/999")
           .then()
              // void return type, maps to 204 or throws exception 500/404 if missing
-             .statusCode(500); 
+             .statusCode(400); 
     }
 
     @Test
@@ -65,6 +65,6 @@ public class PerfilBracoResourceTest {
         given()
           .when().delete("/perfis-braco/deletar/999")
           .then()
-             .statusCode(500); // Exception if missing, so typically 500 or 404
+             .statusCode(400); // Exception if missing, so typically 500 or 404
     }
 }
