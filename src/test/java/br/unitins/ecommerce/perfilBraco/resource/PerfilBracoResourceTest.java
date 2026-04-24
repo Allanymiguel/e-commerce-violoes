@@ -1,14 +1,20 @@
 package br.unitins.ecommerce.perfilBraco.resource;
 
 import org.junit.jupiter.api.Test;
+
+import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import br.unitins.ecommerce.perfilBraco.dto.PerfilBracoRequestDTO;
+import br.unitins.ecommerce.perfilBraco.service.PerfilBracoService;
 
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class PerfilBracoResourceTest {
+
+  @InjectMock
+  PerfilBracoService service;
 
     @Test
     public void testCadastrarPerfilBraco() {
@@ -33,10 +39,10 @@ public class PerfilBracoResourceTest {
     @Test
     public void testListarPerfilBracoPorId() {
         given()
-          .when().get("/perfis-braco/listar/999")
+          .when().get("/perfis-braco/listar/id/999")
           .then()
              // Depending on service layer, could be 404 Not Found or 500 when missing
-             .statusCode(400); 
+             .statusCode(404); 
     }
 
     @Test
@@ -57,7 +63,7 @@ public class PerfilBracoResourceTest {
           .when().put("/perfis-braco/atualizar/999")
           .then()
              // void return type, maps to 204 or throws exception 500/404 if missing
-             .statusCode(400); 
+             .statusCode(404); 
     }
 
     @Test
@@ -65,6 +71,6 @@ public class PerfilBracoResourceTest {
         given()
           .when().delete("/perfis-braco/deletar/999")
           .then()
-             .statusCode(400); // Exception if missing, so typically 500 or 404
+             .statusCode(404); // Exception if missing, so typically 500 or 404
     }
 }

@@ -10,7 +10,7 @@ public interface PerfilBracoService {
     PerfilBraco findById(Long id);
     List<PerfilBraco> findByNome(String nome);
     PerfilBraco create(PerfilBraco perfilBraco);
-    void update(Long id, PerfilBraco perfilBraco);
-    void delete(Long id);
+    boolean update(Long id, PerfilBraco perfilBraco);
+    boolean delete(Long id);
 
 }

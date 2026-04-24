@@ -33,9 +33,13 @@ public class PerfilBracoResource {
     @POST
     @Path("/cadastrar")
     public Response cadastrarPerfilBraco(@Valid PerfilBracoRequestDTO dto){
-        PerfilBraco perfilBraco = service.create(PerfilBracoMapper.toEntity(dto));
-        return Response.status(Status.CREATED).entity(PerfilBracoMapper.toResponse(perfilBraco)).build();
-    }
+    PerfilBraco perfilBraco = service.create(PerfilBracoMapper.toEntity(dto));
+    
+    // Se chegou aqui e o objeto existe, retorna 201
+    return Response.status(Status.CREATED)
+                   .entity(PerfilBracoMapper.toResponse(perfilBraco))
+                   .build();
+}
 
     @GET
     @Path("/listar")
@@ -50,10 +54,11 @@ public class PerfilBracoResource {
     }
 
     @GET
-    @Path("/listar/{id}")
+    @Path("/listar/id/{id}")
     public Response listarPerfilBracoPorId(@PathParam("id") Long idPerfilBraco){
-
-        return Response.ok(PerfilBracoMapper.toResponse(service.findById(idPerfilBraco))).build();
+        PerfilBraco pb = service.findById(idPerfilBraco);
+        if(pb == null) return Response.status(Status.NOT_FOUND).build();
+        return Response.ok(PerfilBracoMapper.toResponse(pb)).build();
     }
 
     @GET
@@ -71,14 +76,15 @@ public class PerfilBracoResource {
     @PUT
     @Path("/atualizar/{id}")
     public Response atualizarPerfilBraco(@PathParam("id") Long idPerfilBraco, @Valid PerfilBracoRequestDTO dto){
-        service.update(idPerfilBraco, PerfilBracoMapper.toEntity(dto));
+        if(!service.update(idPerfilBraco, PerfilBracoMapper.toEntity(dto))) 
+            return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();
     }
 
     @DELETE
     @Path("/deletar/{id}")
     public Response deletarPerfilBraco(@PathParam("id") Long idPerfilBraco){
-        service.delete(idPerfilBraco);
+        if(!service.delete(idPerfilBraco)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();
     }
 

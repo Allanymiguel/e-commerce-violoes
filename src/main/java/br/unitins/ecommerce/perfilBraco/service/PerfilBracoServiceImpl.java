@@ -37,14 +37,20 @@ public class PerfilBracoServiceImpl implements PerfilBracoService{
 
     @Override
     @Transactional
-    public void update(Long id, PerfilBraco perfilBraco) {
+    public boolean update(Long id, PerfilBraco perfilBraco) {
+        PerfilBraco pb = findById(id);
+        if(pb == null) return false;
         repository.update(id, perfilBraco);
+        return true;
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        PerfilBraco pb = findById(id);
+        if (pb == null) return false;
         repository.delete(id);
+        return true;
     }
 
 }
