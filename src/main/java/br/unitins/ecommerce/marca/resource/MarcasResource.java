@@ -18,6 +18,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/marcas")
 @Produces(MediaType.APPLICATION_JSON)
@@ -29,9 +31,9 @@ public class MarcasResource {
 
     @POST
     @Path("/cadastrar")
-    public MarcasResponseDTO cadastrarMarca(MarcasRequestDTO dto){
+    public Response cadastrarMarca(MarcasRequestDTO dto){
         Marcas marca = service.create(MarcasMapper.toEntity(dto));
-        return MarcasMapper.toResponse(marca);
+        return Response.status(Status.CREATED).entity(MarcasMapper.toResponse(marca)).build();
     }
 
     @GET
