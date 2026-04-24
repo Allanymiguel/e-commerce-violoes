@@ -38,63 +38,65 @@ public class MarcasResource {
 
     @GET
     @Path("/listar")
-    public List <MarcasResponseDTO> listarMarcas(){
+    public Response listarMarcas(){
         List<MarcasResponseDTO>dtoList = new ArrayList<>();
         
         for (Marcas m : service.findAll()) {
             dtoList.add(MarcasMapper.toResponse(m));
         }
 
-        return dtoList;
+        return Response.ok(dtoList).build();
     }
 
     @GET
     @Path("/listar/{id}")
-    public MarcasResponseDTO listarMarcasPorId(@PathParam("id") Long idMarca){
+    public Response listarMarcasPorId(@PathParam("id") Long idMarca){
 
-        return MarcasMapper.toResponse(service.findById(idMarca));
+        return Response.ok(MarcasMapper.toResponse(service.findById(idMarca))).build();
     }
 
     @GET
     @Path("/listar/nome/{nome}")
-    public List <MarcasResponseDTO> listarMarcasPorNome(@PathParam("nome") String nomeMarca){
+    public Response listarMarcasPorNome(@PathParam("nome") String nomeMarca){
         List<MarcasResponseDTO> dtoList = new ArrayList<>();
         
         for (Marcas m : service.findByNome(nomeMarca)) {
             dtoList.add(MarcasMapper.toResponse(m));
         }
 
-        return dtoList;
+        return Response.ok(dtoList).build();
     }
 
 
 
     @GET
     @Path("/listar/pais/{paisOrigem}")
-    public List<MarcasResponseDTO> listarMarcasPorPais(@PathParam("paisOrigem") String paisOrigem) {
+    public Response listarMarcasPorPais(@PathParam("paisOrigem") String paisOrigem) {
         List<MarcasResponseDTO>dtoList = new ArrayList<>();
         
         for (Marcas m : service.findByPaisOrigem(paisOrigem)) {
             dtoList.add(MarcasMapper.toResponse(m));
         }
 
-        return dtoList;
+        return Response.ok(dtoList).build();
     }
 
 
 
     @PUT
     @Path("/atualizar/{id}")
-    public void atualizarMarca(@PathParam("id") Long idMarca, MarcasRequestDTO dto){
+    public Response atualizarMarca(@PathParam("id") Long idMarca, MarcasRequestDTO dto){
         service.update(idMarca, MarcasMapper.toEntity(dto));
+        return Response.noContent().build();
     }
 
 
 
     @DELETE
     @Path("/deletar/{id}")
-    public void deletarMarca(@PathParam("id") Long idMarca){
+    public Response deletarMarca(@PathParam("id") Long idMarca){
         service.delete(idMarca);
+        return Response.noContent().build();
     }
 
 }
