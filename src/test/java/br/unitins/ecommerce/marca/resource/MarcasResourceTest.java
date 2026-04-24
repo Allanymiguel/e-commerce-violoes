@@ -1,6 +1,7 @@
 package br.unitins.ecommerce.marca.resource;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
@@ -80,6 +81,8 @@ public class MarcasResourceTest {
     }
     @Test
     public void testDeletarMarcaValido() {
+      Mockito.when(service.delete(1L)).thenReturn(true);
+      
         given()
           .when().delete("/marcas/deletar/1")
           .then()
