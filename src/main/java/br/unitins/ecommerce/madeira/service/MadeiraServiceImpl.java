@@ -43,8 +43,9 @@ public class MadeiraServiceImpl implements MadeiraService{
 
     @Override
     @Transactional
-    public void delete(Long id) {
-        repository.delete(id);
+    public boolean delete(Long id) {
+        if(repository.delete(id)) return true;
+        return false;
     }
 
 }

@@ -42,7 +42,7 @@ public class MadeiraResourceTest {
           .when().get("/madeiras/listar/999")
           .then()
              // Could be 404 or 500 depending on service exception mapper
-             .statusCode(400); 
+             .statusCode(404); 
     }
 
     @Test
@@ -71,6 +71,6 @@ public class MadeiraResourceTest {
         given()
           .when().delete("/madeiras/deletar/999")
           .then()
-             .statusCode(400); // 500 or 404 if it fails due to lack of item
+             .statusCode(404); // 500 or 404 if it fails due to lack of item
     }
 }

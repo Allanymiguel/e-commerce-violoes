@@ -11,6 +11,6 @@ public interface MadeiraService {
     List<Madeira> findByTipo(String tipo);
     Madeira create(Madeira madeira);
     void update(Long id, Madeira madeira);
-    void delete(Long id);
+    boolean delete(Long id);
 
 }

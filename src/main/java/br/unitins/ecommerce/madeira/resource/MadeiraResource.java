@@ -77,7 +77,7 @@ public class MadeiraResource {
     @DELETE
     @Path("/deletar/{id}")
     public Response deletarMadeira(@PathParam("id") Long idMadeira){
-        service.delete(idMadeira);
+        if (!service.delete(idMadeira)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();
     }
 

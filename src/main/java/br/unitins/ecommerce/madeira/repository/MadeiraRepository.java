@@ -58,11 +58,13 @@ public class MadeiraRepository implements PanacheRepository<Madeira> {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public boolean delete(Long id) {
         Madeira existente = findById(id);
 
         if (existente != null) {
             delete(existente);
+            return true;
         }
+        return false;
     }
 }
