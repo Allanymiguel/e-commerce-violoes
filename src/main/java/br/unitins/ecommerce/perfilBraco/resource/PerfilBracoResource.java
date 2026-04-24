@@ -18,6 +18,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/perfis-braco")
 @Produces(MediaType.APPLICATION_JSON)
@@ -29,52 +31,54 @@ public class PerfilBracoResource {
 
     @POST
     @Path("/cadastrar")
-    public PerfilBracoResponseDTO cadastrarPerfilBraco(PerfilBracoRequestDTO dto){
+    public Response cadastrarPerfilBraco(PerfilBracoRequestDTO dto){
         PerfilBraco perfilBraco = service.create(PerfilBracoMapper.toEntity(dto));
-        return PerfilBracoMapper.toResponse(perfilBraco);
+        return Response.status(Status.CREATED).entity(PerfilBracoMapper.toResponse(perfilBraco)).build();
     }
 
     @GET
     @Path("/listar")
-    public List<PerfilBracoResponseDTO> listarPerfisBraco(){
+    public Response listarPerfisBraco(){
         List<PerfilBracoResponseDTO> dtoList = new ArrayList<>();
         
         for (PerfilBraco p : service.findAll()) {
             dtoList.add(PerfilBracoMapper.toResponse(p));
         }
 
-        return dtoList;
+        return Response.ok(dtoList).build();
     }
 
     @GET
     @Path("/listar/{id}")
-    public PerfilBracoResponseDTO listarPerfilBracoPorId(@PathParam("id") Long idPerfilBraco){
+    public Response listarPerfilBracoPorId(@PathParam("id") Long idPerfilBraco){
 
-        return PerfilBracoMapper.toResponse(service.findById(idPerfilBraco));
+        return Response.ok(PerfilBracoMapper.toResponse(service.findById(idPerfilBraco))).build();
     }
 
     @GET
     @Path("/listar/{nome}")
-    public List<PerfilBracoResponseDTO> listarPerfisBracoPorNome(@PathParam("nome") String nomePerfilBraco){
+    public Response listarPerfisBracoPorNome(@PathParam("nome") String nomePerfilBraco){
         List<PerfilBracoResponseDTO> dtoList = new ArrayList<>();
         
         for (PerfilBraco p : service.findByNome(nomePerfilBraco)) {
             dtoList.add(PerfilBracoMapper.toResponse(p));
         }
 
-        return dtoList;
+        return Response.ok(dtoList).build();
     }
 
     @PUT
     @Path("/atualizar/{id}")
-    public void atualizarPerfilBraco(@PathParam("id") Long idPerfilBraco, PerfilBracoRequestDTO dto){
+    public Response atualizarPerfilBraco(@PathParam("id") Long idPerfilBraco, PerfilBracoRequestDTO dto){
         service.update(idPerfilBraco, PerfilBracoMapper.toEntity(dto));
+        return Response.noContent().build();
     }
 
     @DELETE
     @Path("/deletar/{id}")
-    public void deletarPerfilBraco(@PathParam("id") Long idPerfilBraco){
+    public Response deletarPerfilBraco(@PathParam("id") Long idPerfilBraco){
         service.delete(idPerfilBraco);
+        return Response.noContent().build();
     }
 
 }
