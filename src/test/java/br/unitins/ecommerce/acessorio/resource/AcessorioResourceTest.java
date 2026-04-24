@@ -12,7 +12,7 @@ public class AcessorioResourceTest {
 
     @Test
     public void testCadastrarAcessorio() {
-        AcessorioRequestDTO dto = new AcessorioRequestDTO("Palheta", "Palheta média 0.71mm", 100, 2.5);
+        AcessorioRequestDTO dto = new AcessorioRequestDTO("Palheta", "Palheta mï¿½dia 0.71mm", 100, 2.5);
         
         given()
           .contentType(ContentType.JSON)

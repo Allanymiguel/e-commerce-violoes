@@ -49,7 +49,7 @@ public class MadeiraResourceTest {
 
     @Test
     public void testAtualizarMadeira() {
-        MadeiraRequestDTO dto = new MadeiraRequestDTO("Cedro", "Média", "Equilibrada");
+        MadeiraRequestDTO dto = new MadeiraRequestDTO("Cedro", "Mdia", "Equilibrada");
         
         given()
           .contentType(ContentType.JSON)
