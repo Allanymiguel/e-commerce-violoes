@@ -21,6 +21,7 @@ public class MadeiraServiceImpl implements MadeiraService{
 
     @Override
     public Madeira findById(Long id) {
+        
         return repository.findById(id);
     }
 

@@ -1,6 +1,7 @@
 package br.unitins.ecommerce.madeira.resource;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
@@ -39,7 +40,7 @@ public class MadeiraResourceTest {
     @Test
     public void testListarMadeiraPorIdInvalido() {
         given()
-          .when().get("/madeiras/listar/999")
+          .when().get("/madeiras/listar/id/999")
           .then()
              // Could be 404 or 500 depending on service exception mapper
              .statusCode(404); 

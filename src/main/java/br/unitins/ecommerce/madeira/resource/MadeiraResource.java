@@ -50,9 +50,14 @@ public class MadeiraResource {
     }
 
     @GET
-    @Path("/listar/{id}")
+    @Path("/listar/id/{id}")
     public Response listarMadeiraPorId(@PathParam("id") Long idMadeira){
-        return Response.ok(MadeiraMapper.toResponse(service.findById(idMadeira))).build();
+        Madeira m = service.findById(idMadeira);
+        if(m == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+
+        return Response.ok(m).build();
     }
 
     @GET
