@@ -12,6 +12,6 @@ public interface MarcasService {
     List<Marcas> findByNome(String nome);
     Marcas create(Marcas marca);
     void update(Long id, Marcas marca);
-    void delete(Long id);
+    boolean delete(Long id);
 
 }

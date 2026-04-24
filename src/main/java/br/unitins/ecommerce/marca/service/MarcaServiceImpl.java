@@ -48,8 +48,10 @@ public class MarcaServiceImpl implements MarcasService{
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if(findById(id) == null) return false;
         repository.delete(id);
+        return true;
     }
 
     

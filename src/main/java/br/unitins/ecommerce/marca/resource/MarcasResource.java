@@ -52,8 +52,10 @@ public class MarcasResource {
     @GET
     @Path("/listar/{id}")
     public Response listarMarcasPorId(@PathParam("id") Long idMarca){
+        Marcas m = service.findById(idMarca);
 
-        return Response.ok(MarcasMapper.toResponse(service.findById(idMarca))).build();
+        if(m == null) return Response.status(Status.NOT_FOUND).build();
+        return Response.ok(m).build();
     }
 
     @GET
@@ -96,7 +98,7 @@ public class MarcasResource {
     @DELETE
     @Path("/deletar/{id}")
     public Response deletarMarca(@PathParam("id") Long idMarca){
-        service.delete(idMarca);
+        if(!service.delete(idMarca)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();
     }
 
