@@ -9,6 +9,7 @@ import br.unitins.ecommerce.perfilBraco.mapper.PerfilBracoMapper;
 import br.unitins.ecommerce.perfilBraco.model.PerfilBraco;
 import br.unitins.ecommerce.perfilBraco.service.PerfilBracoServiceImpl;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -31,7 +32,7 @@ public class PerfilBracoResource {
 
     @POST
     @Path("/cadastrar")
-    public Response cadastrarPerfilBraco(PerfilBracoRequestDTO dto){
+    public Response cadastrarPerfilBraco(@Valid PerfilBracoRequestDTO dto){
         PerfilBraco perfilBraco = service.create(PerfilBracoMapper.toEntity(dto));
         return Response.status(Status.CREATED).entity(PerfilBracoMapper.toResponse(perfilBraco)).build();
     }
@@ -69,7 +70,7 @@ public class PerfilBracoResource {
 
     @PUT
     @Path("/atualizar/{id}")
-    public Response atualizarPerfilBraco(@PathParam("id") Long idPerfilBraco, PerfilBracoRequestDTO dto){
+    public Response atualizarPerfilBraco(@PathParam("id") Long idPerfilBraco, @Valid PerfilBracoRequestDTO dto){
         service.update(idPerfilBraco, PerfilBracoMapper.toEntity(dto));
         return Response.noContent().build();
     }

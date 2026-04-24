@@ -9,6 +9,7 @@ import br.unitins.ecommerce.acessorio.mapper.AcessorioMapper;
 import br.unitins.ecommerce.acessorio.model.Acessorio;
 import br.unitins.ecommerce.acessorio.service.AcessorioServiceImpl;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -31,7 +32,7 @@ public class AcessorioResource {
 
     @POST
     @Path("/cadastrar")
-    public Response cadastrarAcessorio(AcessorioRequestDTO dto) {
+    public Response cadastrarAcessorio(@Valid AcessorioRequestDTO dto) {
         return Response.status(Status.CREATED).entity(service.create(AcessorioMapper.toEntity(dto))).build();
     }
 
@@ -67,7 +68,7 @@ public class AcessorioResource {
 
     @PUT
     @Path("/atualizar/{id}")
-    public Response atualizarAcessorio(@PathParam("id") Long idAcessorio, AcessorioRequestDTO dto) {
+    public Response atualizarAcessorio(@PathParam("id") Long idAcessorio, @Valid AcessorioRequestDTO dto) {
         service.update(idAcessorio, AcessorioMapper.toEntity(dto));
         return Response.noContent().build();
     }

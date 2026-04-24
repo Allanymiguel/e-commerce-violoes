@@ -9,6 +9,7 @@ import br.unitins.ecommerce.madeira.mapper.MadeiraMapper;
 import br.unitins.ecommerce.madeira.model.Madeira;
 import br.unitins.ecommerce.madeira.service.MadeiraServiceImpl;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -31,7 +32,7 @@ public class MadeiraResource {
 
     @POST
     @Path("/cadastrar")
-    public Response cadastrarMadeira(MadeiraRequestDTO dto){
+    public Response cadastrarMadeira(@Valid MadeiraRequestDTO dto){
         Madeira madeira = service.create(MadeiraMapper.toEntity(dto));
         return Response.status(Status.CREATED).entity(MadeiraMapper.toResponse(madeira)).build();
     }
@@ -68,7 +69,7 @@ public class MadeiraResource {
 
     @PUT
     @Path("/atualizar/{id}")
-    public Response atualizarMadeira(@PathParam("id") Long idMadeira, MadeiraRequestDTO dto){
+    public Response atualizarMadeira(@PathParam("id") Long idMadeira, @Valid MadeiraRequestDTO dto){
         service.update(idMadeira, MadeiraMapper.toEntity(dto));
         return Response.noContent().build();
     }

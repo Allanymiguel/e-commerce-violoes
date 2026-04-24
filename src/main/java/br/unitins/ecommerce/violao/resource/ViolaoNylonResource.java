@@ -3,6 +3,7 @@ package br.unitins.ecommerce.violao.resource;
 import br.unitins.ecommerce.violao.dto.ViolaoNylonRequestDTO;
 import br.unitins.ecommerce.violao.service.ViolaoNylonService;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -36,14 +37,14 @@ public class ViolaoNylonResource {
 
     @POST
     @Path("/cadastrar")
-    public Response create(ViolaoNylonRequestDTO dto) {
+    public Response create(@Valid ViolaoNylonRequestDTO dto) {
         violaoNylonService.create(dto);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
     @Path("/atualizar/{id}")
-    public Response update(@PathParam("id") Long id, ViolaoNylonRequestDTO dto) {
+    public Response update(@PathParam("id") Long id, @Valid ViolaoNylonRequestDTO dto) {
         violaoNylonService.update(id, dto);
         return Response.noContent().build();
     }

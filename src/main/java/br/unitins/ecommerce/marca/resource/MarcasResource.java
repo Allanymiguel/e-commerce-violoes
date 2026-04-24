@@ -9,6 +9,7 @@ import br.unitins.ecommerce.marca.mapper.MarcasMapper;
 import br.unitins.ecommerce.marca.model.Marcas;
 import br.unitins.ecommerce.marca.service.MarcaServiceImpl;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -31,7 +32,7 @@ public class MarcasResource {
 
     @POST
     @Path("/cadastrar")
-    public Response cadastrarMarca(MarcasRequestDTO dto){
+    public Response cadastrarMarca(@Valid MarcasRequestDTO dto){
         Marcas marca = service.create(MarcasMapper.toEntity(dto));
         return Response.status(Status.CREATED).entity(MarcasMapper.toResponse(marca)).build();
     }
@@ -85,7 +86,7 @@ public class MarcasResource {
 
     @PUT
     @Path("/atualizar/{id}")
-    public Response atualizarMarca(@PathParam("id") Long idMarca, MarcasRequestDTO dto){
+    public Response atualizarMarca(@PathParam("id") Long idMarca, @Valid MarcasRequestDTO dto){
         service.update(idMarca, MarcasMapper.toEntity(dto));
         return Response.noContent().build();
     }

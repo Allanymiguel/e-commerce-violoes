@@ -3,6 +3,7 @@ package br.unitins.ecommerce.violao.resource;
 import br.unitins.ecommerce.violao.dto.ViolaoAcoRequestDTO;
 import br.unitins.ecommerce.violao.service.ViolaoAcoServiceImpl;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -36,14 +37,14 @@ public class ViolaoAcoResource {
 
     @POST
     @Path("/cadastrar")
-    public Response create(ViolaoAcoRequestDTO dto) {
+    public Response create(@Valid ViolaoAcoRequestDTO dto) {
         service.create(dto);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
     @Path("/atualizar/{id}")
-    public Response update(@PathParam("id") Long id, ViolaoAcoRequestDTO dto) {
+    public Response update(@PathParam("id") Long id, @Valid ViolaoAcoRequestDTO dto) {
         service.update(id, dto);
         return Response.noContent().build();
     }

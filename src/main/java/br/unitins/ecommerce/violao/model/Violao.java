@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.util.List;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -41,10 +42,12 @@ public abstract class Violao {
     @PositiveOrZero
     private Integer anoFabricacao;
 
+    @Valid
     @ManyToOne
     @JoinColumn(name = "id_madeira")
     private Madeira madeira;
     
+    @Valid
     @ManyToMany
     @JoinTable(
         name = "violao_acessorio",
@@ -53,10 +56,12 @@ public abstract class Violao {
     )
     private List<Acessorio> acessorios;
 
+    @Valid
     @ManyToOne
     @JoinColumn(name = "id_marca")
     private Marcas marca;
 
+    @Valid
     @ManyToOne
     @JoinColumn(name = "id_perfil_braco")
     private PerfilBraco perfilBraco;
