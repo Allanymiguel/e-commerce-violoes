@@ -1,6 +1,5 @@
 package br.unitins.ecommerce.acessorio.resource;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
@@ -9,7 +8,6 @@ import br.unitins.ecommerce.acessorio.dto.AcessorioRequestDTO;
 import br.unitins.ecommerce.acessorio.service.AcessorioService;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.reset;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
