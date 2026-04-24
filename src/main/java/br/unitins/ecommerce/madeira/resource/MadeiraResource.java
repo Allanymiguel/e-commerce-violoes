@@ -18,6 +18,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/madeiras")
 @Produces(MediaType.APPLICATION_JSON)
@@ -29,27 +31,27 @@ public class MadeiraResource {
 
     @POST
     @Path("/cadastrar")
-    public MadeiraResponseDTO cadastrarMadeira(MadeiraRequestDTO dto){
+    public Response cadastrarMadeira(MadeiraRequestDTO dto){
         Madeira madeira = service.create(MadeiraMapper.toEntity(dto));
-        return MadeiraMapper.toResponse(madeira);
+        return Response.status(Status.CREATED).entity(MadeiraMapper.toResponse(madeira)).build();
     }
 
     @GET
     @Path("/listar")
-    public List<MadeiraResponseDTO> listarMadeiras(){
+    public Response listarMadeiras(){
         List<MadeiraResponseDTO> dtoList = new ArrayList<>();
         
         for (Madeira m : service.findAll()) {
             dtoList.add(MadeiraMapper.toResponse(m));
         }
 
-        return dtoList;
+        return Response.ok(dtoList).build();
     }
 
     @GET
     @Path("/listar/{id}")
-    public MadeiraResponseDTO listarMadeiraPorId(@PathParam("id") Long idMadeira){
-        return MadeiraMapper.toResponse(service.findById(idMadeira));
+    public Response listarMadeiraPorId(@PathParam("id") Long idMadeira){
+        return Response.ok(MadeiraMapper.toResponse(service.findById(idMadeira))).build();
     }
 
     @GET
