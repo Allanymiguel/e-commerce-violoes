@@ -40,17 +40,22 @@ public class ViolaoNylonServiceImpl implements ViolaoNylonService {
 
     @Override
     @Transactional
-    public void update(Long id, ViolaoNylonRequestDTO dto) {
+    public boolean update(Long id, ViolaoNylonRequestDTO dto) {
         ViolaoNylon violaoNylon = violaoNylonRepository.findById(id);
+        if(violaoNylon == null) return false;
         violaoNylon.setNome(dto.nome());
         violaoNylon.setPrecoBase(dto.precoBase());
         violaoNylon.setAnoFabricacao(dto.anoFabricacao());
         violaoNylon.setTipoCordasNylon(dto.tipoCordasNylon());
+        return true;
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        ViolaoNylonResponseDTO v = getById(id);
+        if (v == null) return false;
         violaoNylonRepository.deleteById(id);
+        return true;
     }
 }

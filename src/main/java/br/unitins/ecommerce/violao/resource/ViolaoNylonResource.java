@@ -1,6 +1,7 @@
 package br.unitins.ecommerce.violao.resource;
 
 import br.unitins.ecommerce.violao.dto.ViolaoNylonRequestDTO;
+import br.unitins.ecommerce.violao.dto.ViolaoNylonResponseDTO;
 import br.unitins.ecommerce.violao.service.ViolaoNylonService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -14,6 +15,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/violoes/nylon")
 @Produces(MediaType.APPLICATION_JSON)
@@ -32,7 +34,9 @@ public class ViolaoNylonResource {
     @GET
     @Path("/listar/{id}")
     public Response getById(@PathParam("id") Long id) {
-        return Response.ok(violaoNylonService.getById(id)).build();
+        ViolaoNylonResponseDTO v = violaoNylonService.getById(id);
+        if (v == null) return Response.status(Status.NOT_FOUND).build();
+        return Response.ok(v).build();
     }
 
     @POST
@@ -45,14 +49,14 @@ public class ViolaoNylonResource {
     @PUT
     @Path("/atualizar/{id}")
     public Response update(@PathParam("id") Long id, @Valid ViolaoNylonRequestDTO dto) {
-        violaoNylonService.update(id, dto);
+        if(!violaoNylonService.update(id, dto)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();
     }
 
     @DELETE
     @Path("/deletar/{id}")
     public Response delete(@PathParam("id") Long id) {
-        violaoNylonService.delete(id);
+        if(!violaoNylonService.delete(id)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();
     }
 }

@@ -17,7 +17,7 @@ public interface ViolaoNylonService {
 
     void create(ViolaoNylonRequestDTO dto);
 
-    void update(Long id, ViolaoNylonRequestDTO dto);
+    boolean update(Long id, ViolaoNylonRequestDTO dto);
 
-    void delete(Long id);
+    boolean delete(Long id);
 }
