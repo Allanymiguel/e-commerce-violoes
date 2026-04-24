@@ -2,7 +2,6 @@ package br.unitins.ecommerce.violao.resource;
 
 import br.unitins.ecommerce.violao.dto.ViolaoAcoRequestDTO;
 import br.unitins.ecommerce.violao.dto.ViolaoAcoResponseDTO;
-import br.unitins.ecommerce.violao.model.ViolaoAco;
 import br.unitins.ecommerce.violao.service.ViolaoAcoServiceImpl;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
