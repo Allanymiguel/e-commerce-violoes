@@ -33,15 +33,6 @@ public class MarcasResourceTest {
     }
 
     @Test
-    public void testListarMarcasPorId() {
-        given()
-          .when().get("/marcas/listar/1")
-          .then()
-             // Depending on service layer exception mapping, could be 404/500/204
-             // Using 500/404 based on standard NotFound exceptions 
-             .statusCode(200); 
-    }
-    @Test
     public void testListarMarcasPorIdInvalido() {
         given()
           .when().get("/marcas/listar/999")

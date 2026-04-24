@@ -50,7 +50,7 @@ public class MarcasResource {
     }
 
     @GET
-    @Path("/listar/{id}")
+    @Path("/listar/id/{id}")
     public Response listarMarcasPorId(@PathParam("id") Long idMarca){
         Marcas m = service.findById(idMarca);
 
