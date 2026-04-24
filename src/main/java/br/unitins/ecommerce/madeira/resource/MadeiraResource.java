@@ -68,14 +68,16 @@ public class MadeiraResource {
 
     @PUT
     @Path("/atualizar/{id}")
-    public void atualizarMadeira(@PathParam("id") Long idMadeira, MadeiraRequestDTO dto){
+    public Response atualizarMadeira(@PathParam("id") Long idMadeira, MadeiraRequestDTO dto){
         service.update(idMadeira, MadeiraMapper.toEntity(dto));
+        return Response.noContent().build();
     }
 
     @DELETE
     @Path("/deletar/{id}")
-    public void deletarMadeira(@PathParam("id") Long idMadeira){
+    public Response deletarMadeira(@PathParam("id") Long idMadeira){
         service.delete(idMadeira);
+        return Response.noContent().build();
     }
 
 }
