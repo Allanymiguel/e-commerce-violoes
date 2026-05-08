@@ -1,5 +1,6 @@
 package br.unitins.ecommerce.violao.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -9,9 +10,10 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "violoes_aco")
 public class ViolaoAco extends Violao {
-    
+
     @Enumerated(EnumType.STRING)
     @NotNull
+    @Column(name = "tipo_cordas_aco")
     private TipoCordasAco tipoCordasAco;
 
     public TipoCordasAco getTipoCordasAco() {

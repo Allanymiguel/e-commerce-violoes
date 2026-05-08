@@ -1,5 +1,6 @@
 package br.unitins.ecommerce.violao.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,10 +37,12 @@ public abstract class Violao {
 
     @NotNull
     @Positive
+    @Column(name = "preco_base")
     private Double precoBase;
 
     @NotNull
     @PositiveOrZero
+    @Column(name = "ano_fabricacao")
     private Integer anoFabricacao;
 
     @Valid
