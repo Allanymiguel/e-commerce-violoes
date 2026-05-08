@@ -60,7 +60,7 @@ public class UsuarioResource {
     }
 
     @POST
-    @RolesAllowed("ADMIN")
+    // @RolesAllowed("ADMIN") desabilitei para poder criar meu perfil de teste
     public Response criar(@Valid UsuarioRequestDTO dto) {
         Usuario usuario = UsuarioMapper.toEntity(dto);
         Usuario usuarioCriado = service.create(usuario);

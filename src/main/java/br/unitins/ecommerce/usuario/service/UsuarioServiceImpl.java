@@ -9,6 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response.Status;
 
 @ApplicationScoped
 public class UsuarioServiceImpl implements UsuarioService {
@@ -26,7 +27,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario findById(Long id) {
-        return repository.findById(id);
+        Usuario u = repository.findById(id);
+        if (u == null) {
+            throw new WebApplicationException("Usuario nao encontrado", Status.NOT_FOUND);
+        }
+        return u;
     }
 
     @Override
