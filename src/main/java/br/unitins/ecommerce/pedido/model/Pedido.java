@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.unitins.ecommerce.endereco.model.Endereco;
-import br.unitins.ecommerce.pedido.model.ItemPedido;
 import br.unitins.ecommerce.usuario.model.Usuario;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
