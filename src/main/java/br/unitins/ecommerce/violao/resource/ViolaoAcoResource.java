@@ -2,7 +2,8 @@ package br.unitins.ecommerce.violao.resource;
 
 import br.unitins.ecommerce.violao.dto.ViolaoAcoRequestDTO;
 import br.unitins.ecommerce.violao.dto.ViolaoAcoResponseDTO;
-import br.unitins.ecommerce.violao.service.ViolaoAcoServiceImpl;
+import br.unitins.ecommerce.violao.service.ViolaoAcoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -23,7 +24,7 @@ import jakarta.ws.rs.core.Response.Status;
 public class ViolaoAcoResource {
 
     @Inject
-    private ViolaoAcoServiceImpl service;
+    private ViolaoAcoService service;
 
     @GET
     @Path("/listar")
@@ -41,6 +42,7 @@ public class ViolaoAcoResource {
 
     @POST
     @Path("/cadastrar")
+    @RolesAllowed("ADMIN")
     public Response create(@Valid ViolaoAcoRequestDTO dto) {
         service.create(dto);
         return Response.status(Response.Status.CREATED).build();
@@ -48,6 +50,7 @@ public class ViolaoAcoResource {
 
     @PUT
     @Path("/atualizar/{id}")
+    @RolesAllowed("ADMIN")
     public Response update(@PathParam("id") Long id, @Valid ViolaoAcoRequestDTO dto) {
         if(!service.update(id, dto)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();
@@ -55,6 +58,7 @@ public class ViolaoAcoResource {
 
     @DELETE
     @Path("/deletar/{id}")
+    @RolesAllowed("ADMIN")
     public Response delete(@PathParam("id") Long id) {
         if(!service.delete(id)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();

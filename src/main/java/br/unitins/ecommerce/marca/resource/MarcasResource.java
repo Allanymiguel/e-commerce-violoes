@@ -7,7 +7,8 @@ import br.unitins.ecommerce.marca.dto.MarcasRequestDTO;
 import br.unitins.ecommerce.marca.dto.MarcasResponseDTO;
 import br.unitins.ecommerce.marca.mapper.MarcasMapper;
 import br.unitins.ecommerce.marca.model.Marcas;
-import br.unitins.ecommerce.marca.service.MarcaServiceImpl;
+import br.unitins.ecommerce.marca.service.MarcasService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -28,10 +29,11 @@ import jakarta.ws.rs.core.Response.Status;
 public class MarcasResource {
     
     @Inject
-    MarcaServiceImpl service;
+    MarcasService service;
 
     @POST
     @Path("/cadastrar")
+    @RolesAllowed("ADMIN")
     public Response cadastrarMarca(@Valid MarcasRequestDTO dto){
         Marcas marca = service.create(MarcasMapper.toEntity(dto));
         return Response.status(Status.CREATED).entity(MarcasMapper.toResponse(marca)).build();
@@ -55,7 +57,7 @@ public class MarcasResource {
         Marcas m = service.findById(idMarca);
 
         if(m == null) return Response.status(Status.NOT_FOUND).build();
-        return Response.ok(m).build();
+        return Response.ok(MarcasMapper.toResponse(m)).build();
     }
 
     @GET
@@ -88,6 +90,7 @@ public class MarcasResource {
 
     @PUT
     @Path("/atualizar/{id}")
+    @RolesAllowed("ADMIN")
     public Response atualizarMarca(@PathParam("id") Long idMarca, @Valid MarcasRequestDTO dto){
         service.update(idMarca, MarcasMapper.toEntity(dto));
         return Response.noContent().build();
@@ -97,6 +100,7 @@ public class MarcasResource {
 
     @DELETE
     @Path("/deletar/{id}")
+    @RolesAllowed("ADMIN")
     public Response deletarMarca(@PathParam("id") Long idMarca){
         if(!service.delete(idMarca)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();

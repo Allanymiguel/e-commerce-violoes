@@ -7,7 +7,8 @@ import br.unitins.ecommerce.perfilBraco.dto.PerfilBracoRequestDTO;
 import br.unitins.ecommerce.perfilBraco.dto.PerfilBracoResponseDTO;
 import br.unitins.ecommerce.perfilBraco.mapper.PerfilBracoMapper;
 import br.unitins.ecommerce.perfilBraco.model.PerfilBraco;
-import br.unitins.ecommerce.perfilBraco.service.PerfilBracoServiceImpl;
+import br.unitins.ecommerce.perfilBraco.service.PerfilBracoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -28,10 +29,11 @@ import jakarta.ws.rs.core.Response.Status;
 public class PerfilBracoResource {
     
     @Inject
-    PerfilBracoServiceImpl service;
+    PerfilBracoService service;
 
     @POST
     @Path("/cadastrar")
+    @RolesAllowed("ADMIN")
     public Response cadastrarPerfilBraco(@Valid PerfilBracoRequestDTO dto){
     PerfilBraco perfilBraco = service.create(PerfilBracoMapper.toEntity(dto));
     
@@ -75,6 +77,7 @@ public class PerfilBracoResource {
 
     @PUT
     @Path("/atualizar/{id}")
+    @RolesAllowed("ADMIN")
     public Response atualizarPerfilBraco(@PathParam("id") Long idPerfilBraco, @Valid PerfilBracoRequestDTO dto){
         if(!service.update(idPerfilBraco, PerfilBracoMapper.toEntity(dto))) 
             return Response.status(Status.NOT_FOUND).build();
@@ -83,6 +86,7 @@ public class PerfilBracoResource {
 
     @DELETE
     @Path("/deletar/{id}")
+    @RolesAllowed("ADMIN")
     public Response deletarPerfilBraco(@PathParam("id") Long idPerfilBraco){
         if(!service.delete(idPerfilBraco)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();

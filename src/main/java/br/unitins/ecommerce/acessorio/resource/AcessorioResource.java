@@ -7,7 +7,8 @@ import br.unitins.ecommerce.acessorio.dto.AcessorioRequestDTO;
 import br.unitins.ecommerce.acessorio.dto.AcessorioResponseDTO;
 import br.unitins.ecommerce.acessorio.mapper.AcessorioMapper;
 import br.unitins.ecommerce.acessorio.model.Acessorio;
-import br.unitins.ecommerce.acessorio.service.AcessorioServiceImpl;
+import br.unitins.ecommerce.acessorio.service.AcessorioService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -28,10 +29,11 @@ import jakarta.ws.rs.core.Response.Status;
 public class AcessorioResource {
 
     @Inject
-    AcessorioServiceImpl service;
+    AcessorioService service;
 
     @POST
     @Path("/cadastrar")
+    @RolesAllowed("ADMIN")
     public Response cadastrarAcessorio(@Valid AcessorioRequestDTO dto) {
         return Response.status(Status.CREATED).entity(service.create(AcessorioMapper.toEntity(dto))).build();
     }
@@ -68,6 +70,7 @@ public class AcessorioResource {
 
     @PUT
     @Path("/atualizar/{id}")
+    @RolesAllowed("ADMIN")
     public Response atualizarAcessorio(@PathParam("id") Long idAcessorio, @Valid AcessorioRequestDTO dto) {
         service.update(idAcessorio, AcessorioMapper.toEntity(dto));
         return Response.noContent().build();
@@ -75,6 +78,7 @@ public class AcessorioResource {
 
     @DELETE
     @Path("/deletar/{id}")
+    @RolesAllowed("ADMIN")
     public Response deletarAcessorio(@PathParam("id") Long idAcessorio) {
         service.delete(idAcessorio);
         return Response.noContent().build();

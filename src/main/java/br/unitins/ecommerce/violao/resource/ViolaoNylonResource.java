@@ -3,6 +3,7 @@ package br.unitins.ecommerce.violao.resource;
 import br.unitins.ecommerce.violao.dto.ViolaoNylonRequestDTO;
 import br.unitins.ecommerce.violao.dto.ViolaoNylonResponseDTO;
 import br.unitins.ecommerce.violao.service.ViolaoNylonService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -41,6 +42,7 @@ public class ViolaoNylonResource {
 
     @POST
     @Path("/cadastrar")
+    @RolesAllowed("ADMIN")
     public Response create(@Valid ViolaoNylonRequestDTO dto) {
         violaoNylonService.create(dto);
         return Response.status(Response.Status.CREATED).build();
@@ -48,6 +50,7 @@ public class ViolaoNylonResource {
 
     @PUT
     @Path("/atualizar/{id}")
+    @RolesAllowed("ADMIN")
     public Response update(@PathParam("id") Long id, @Valid ViolaoNylonRequestDTO dto) {
         if(!violaoNylonService.update(id, dto)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();
@@ -55,6 +58,7 @@ public class ViolaoNylonResource {
 
     @DELETE
     @Path("/deletar/{id}")
+    @RolesAllowed("ADMIN")
     public Response delete(@PathParam("id") Long id) {
         if(!violaoNylonService.delete(id)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();

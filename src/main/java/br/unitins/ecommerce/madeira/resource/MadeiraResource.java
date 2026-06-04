@@ -7,7 +7,8 @@ import br.unitins.ecommerce.madeira.dto.MadeiraRequestDTO;
 import br.unitins.ecommerce.madeira.dto.MadeiraResponseDTO;
 import br.unitins.ecommerce.madeira.mapper.MadeiraMapper;
 import br.unitins.ecommerce.madeira.model.Madeira;
-import br.unitins.ecommerce.madeira.service.MadeiraServiceImpl;
+import br.unitins.ecommerce.madeira.service.MadeiraService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -28,10 +29,11 @@ import jakarta.ws.rs.core.Response.Status;
 public class MadeiraResource {
     
     @Inject
-    MadeiraServiceImpl service;
+    MadeiraService service;
 
     @POST
     @Path("/cadastrar")
+    @RolesAllowed("ADMIN")
     public Response cadastrarMadeira(@Valid MadeiraRequestDTO dto){
         Madeira madeira = service.create(MadeiraMapper.toEntity(dto));
         return Response.status(Status.CREATED).entity(MadeiraMapper.toResponse(madeira)).build();
@@ -57,7 +59,7 @@ public class MadeiraResource {
             return Response.status(Status.NOT_FOUND).build();
         }
 
-        return Response.ok(m).build();
+        return Response.ok(MadeiraMapper.toResponse(m)).build();
     }
 
     @GET
@@ -74,6 +76,7 @@ public class MadeiraResource {
 
     @PUT
     @Path("/atualizar/{id}")
+    @RolesAllowed("ADMIN")
     public Response atualizarMadeira(@PathParam("id") Long idMadeira, @Valid MadeiraRequestDTO dto){
         service.update(idMadeira, MadeiraMapper.toEntity(dto));
         return Response.noContent().build();
@@ -81,6 +84,7 @@ public class MadeiraResource {
 
     @DELETE
     @Path("/deletar/{id}")
+    @RolesAllowed("ADMIN")
     public Response deletarMadeira(@PathParam("id") Long idMadeira){
         if (!service.delete(idMadeira)) return Response.status(Status.NOT_FOUND).build();
         return Response.noContent().build();
