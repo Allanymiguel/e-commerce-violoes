@@ -3,6 +3,7 @@ package br.unitins.ecommerce.auth.client;
 import java.util.List;
 
 import br.unitins.ecommerce.auth.KeycloakCreateUserDTO;
+import br.unitins.ecommerce.auth.KeycloakCredentialDTO;
 import br.unitins.ecommerce.auth.KeycloakRoleDTO;
 import br.unitins.ecommerce.auth.KeycloakUpdateUserDTO;
 import br.unitins.ecommerce.auth.KeycloakTokenResponseDTO;
@@ -100,4 +101,13 @@ public interface KeycloakAdminRestClient {
             @PathParam("realm") String realm,
             @PathParam("id") String userId,
             List<KeycloakRoleDTO> roles);
+
+    @PUT
+    @Path("/admin/realms/{realm}/users/{id}/reset-password")
+    @Consumes(MediaType.APPLICATION_JSON)
+    void resetSenha(
+            @HeaderParam("Authorization") String authorization,
+            @PathParam("realm") String realm,
+            @PathParam("id") String userId,
+            KeycloakCredentialDTO credential);
 }
