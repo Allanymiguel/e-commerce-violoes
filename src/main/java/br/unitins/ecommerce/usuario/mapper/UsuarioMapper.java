@@ -12,7 +12,6 @@ public class UsuarioMapper {
         usuario.setLogin(dto.login());
         usuario.setSenhaHash(dto.senha());
         usuario.setEmail(dto.email());
-        usuario.setPerfil(dto.perfil());
         return usuario;
     }
 

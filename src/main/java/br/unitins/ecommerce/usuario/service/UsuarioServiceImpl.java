@@ -8,6 +8,7 @@ import br.unitins.ecommerce.auth.KeycloakRoleDTO;
 import br.unitins.ecommerce.auth.KeycloakTokenResponseDTO;
 import br.unitins.ecommerce.auth.KeycloakUpdateUserDTO;
 import br.unitins.ecommerce.auth.client.KeycloakAdminRestClient;
+import br.unitins.ecommerce.usuario.model.Perfil;
 import br.unitins.ecommerce.usuario.model.Usuario;
 import br.unitins.ecommerce.usuario.repository.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -73,6 +74,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new WebApplicationException("Login ja existe", Status.BAD_REQUEST);
         }
 
+        usuario.setPerfil(Perfil.CLIENTE);
         String senhaPlaintext = usuario.getSenhaHash();
         String bearer = obterTokenAdmin();
 
