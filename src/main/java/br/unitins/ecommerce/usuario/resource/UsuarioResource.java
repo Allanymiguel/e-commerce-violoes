@@ -2,6 +2,7 @@ package br.unitins.ecommerce.usuario.resource;
 
 import java.util.List;
 
+import br.unitins.ecommerce.usuario.dto.UsuarioCompletoRequestDTO;
 import br.unitins.ecommerce.usuario.dto.UsuarioRequestDTO;
 import br.unitins.ecommerce.usuario.dto.UsuarioResponseDTO;
 import br.unitins.ecommerce.usuario.dto.UsuarioUpdateRequestDTO;
@@ -58,6 +59,15 @@ public class UsuarioResource {
     @POST
     public Response criar(@Valid UsuarioRequestDTO dto) {
         Usuario usuarioCriado = service.create(UsuarioMapper.toEntity(dto));
+        return Response.status(Status.CREATED)
+                .entity(UsuarioMapper.toResponseDTO(usuarioCriado))
+                .build();
+    }
+
+    @POST
+    @Path("/completo")
+    public Response criarCompleto(@Valid UsuarioCompletoRequestDTO dto) {
+        Usuario usuarioCriado = service.create(UsuarioMapper.toEntityFromCompleto(dto));
         return Response.status(Status.CREATED)
                 .entity(UsuarioMapper.toResponseDTO(usuarioCriado))
                 .build();

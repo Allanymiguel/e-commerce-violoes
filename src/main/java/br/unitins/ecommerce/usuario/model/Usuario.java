@@ -1,5 +1,6 @@
 package br.unitins.ecommerce.usuario.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -26,6 +27,17 @@ public class Usuario {
 
     @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(name = "nome_completo")
+    private String nomeCompleto;
+
+    @Column(unique = true)
+    private String cpf;
+
+    private String telefone;
+
+    @Column(name = "data_nascimento")
+    private LocalDate dataNascimento;
 
     // Placeholder; credenciais sao gerenciadas pelo Keycloak
     @Column(name = "senha_hash", nullable = false)
@@ -74,6 +86,38 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getNomeCompleto() {
+        return nomeCompleto;
+    }
+
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getSenhaHash() {
