@@ -4,6 +4,7 @@ import br.unitins.ecommerce.listaDesejos.dto.ListaDesejosRequestDTO;
 import br.unitins.ecommerce.listaDesejos.service.ListaDesejosService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -34,7 +35,7 @@ public class ListaDesejosResource {
     }
 
     @POST
-    public Response adicionar(ListaDesejosRequestDTO dto) {
+    public Response adicionar(@Valid ListaDesejosRequestDTO dto) {
         service.create(jwt.getSubject(), dto);
         return Response.status(Status.CREATED).build();
     }

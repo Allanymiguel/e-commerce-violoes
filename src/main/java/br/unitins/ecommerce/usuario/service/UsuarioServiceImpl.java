@@ -94,6 +94,9 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw e;
         }
         String location = response.getHeaderString("Location");
+        if (location == null || location.isBlank()) {
+            throw new WebApplicationException("Falha ao obter ID do usuario no Keycloak", Status.INTERNAL_SERVER_ERROR);
+        }
         String keycloakId = location.substring(location.lastIndexOf('/') + 1);
         usuario.setKeycloakId(keycloakId);
 
@@ -125,8 +128,13 @@ public class UsuarioServiceImpl implements UsuarioService {
                 KeycloakRoleDTO oldRole = adminClient.buscarRole(bearer, targetRealm, u.getPerfil().name());
                 adminClient.removerRoles(bearer, targetRealm, u.getKeycloakId(), List.of(oldRole));
 
-                KeycloakRoleDTO newRole = adminClient.buscarRole(bearer, targetRealm, usuario.getPerfil().name());
-                adminClient.atribuirRoles(bearer, targetRealm, u.getKeycloakId(), List.of(newRole));
+                try {
+                    KeycloakRoleDTO newRole = adminClient.buscarRole(bearer, targetRealm, usuario.getPerfil().name());
+                    adminClient.atribuirRoles(bearer, targetRealm, u.getKeycloakId(), List.of(newRole));
+                } catch (Exception e) {
+                    adminClient.atribuirRoles(bearer, targetRealm, u.getKeycloakId(), List.of(oldRole));
+                    throw new WebApplicationException("Falha ao atualizar perfil no Keycloak", Status.INTERNAL_SERVER_ERROR);
+                }
             }
         }
 
