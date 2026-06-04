@@ -6,6 +6,7 @@ import br.unitins.ecommerce.auth.KeycloakCreateUserDTO;
 import br.unitins.ecommerce.auth.KeycloakCredentialDTO;
 import br.unitins.ecommerce.auth.KeycloakRoleDTO;
 import br.unitins.ecommerce.auth.KeycloakTokenResponseDTO;
+import br.unitins.ecommerce.auth.KeycloakUpdateUserDTO;
 import br.unitins.ecommerce.auth.client.KeycloakAdminRestClient;
 import br.unitins.ecommerce.usuario.model.Usuario;
 import br.unitins.ecommerce.usuario.repository.UsuarioRepository;
@@ -110,6 +111,21 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (!u.getLogin().equals(usuario.getLogin()) &&
             repository.findByLogin(usuario.getLogin()).isPresent()) {
             throw new WebApplicationException("Login ja existe", Status.BAD_REQUEST);
+        }
+
+        if (u.getKeycloakId() != null) {
+            String bearer = obterTokenAdmin();
+
+            adminClient.atualizarUsuario(bearer, targetRealm, u.getKeycloakId(),
+                    new KeycloakUpdateUserDTO(usuario.getLogin(), usuario.getEmail()));
+
+            if (!u.getPerfil().equals(usuario.getPerfil())) {
+                KeycloakRoleDTO oldRole = adminClient.buscarRole(bearer, targetRealm, u.getPerfil().name());
+                adminClient.removerRoles(bearer, targetRealm, u.getKeycloakId(), List.of(oldRole));
+
+                KeycloakRoleDTO newRole = adminClient.buscarRole(bearer, targetRealm, usuario.getPerfil().name());
+                adminClient.atribuirRoles(bearer, targetRealm, u.getKeycloakId(), List.of(newRole));
+            }
         }
 
         u.setLogin(usuario.getLogin());

@@ -4,9 +4,10 @@ import java.util.List;
 
 import br.unitins.ecommerce.usuario.dto.UsuarioRequestDTO;
 import br.unitins.ecommerce.usuario.dto.UsuarioResponseDTO;
+import br.unitins.ecommerce.usuario.dto.UsuarioUpdateRequestDTO;
 import br.unitins.ecommerce.usuario.mapper.UsuarioMapper;
 import br.unitins.ecommerce.usuario.model.Usuario;
-import br.unitins.ecommerce.usuario.service.UsuarioServiceImpl;
+import br.unitins.ecommerce.usuario.service.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -28,7 +29,7 @@ import jakarta.ws.rs.core.Response.Status;
 public class UsuarioResource {
 
     @Inject
-    UsuarioServiceImpl service;
+    UsuarioService service;
 
     @GET
     @RolesAllowed("ADMIN")
@@ -44,26 +45,19 @@ public class UsuarioResource {
     @Path("/{id}")
     @RolesAllowed("ADMIN")
     public Response buscarPeloId(@PathParam("id") Long id) {
-        Usuario usuario = service.findById(id);
-        if (usuario == null) {
-            return Response.status(Status.NOT_FOUND).build();
-        }
-        return Response.ok(UsuarioMapper.toResponseDTO(usuario)).build();
+        return Response.ok(UsuarioMapper.toResponseDTO(service.findById(id))).build();
     }
 
     @GET
     @Path("/login/{login}")
     @RolesAllowed("ADMIN")
     public Response buscarPeloLogin(@PathParam("login") String login) {
-        Usuario usuario = service.findByLogin(login);
-        return Response.ok(UsuarioMapper.toResponseDTO(usuario)).build();
+        return Response.ok(UsuarioMapper.toResponseDTO(service.findByLogin(login))).build();
     }
 
     @POST
-    // @RolesAllowed("ADMIN") desabilitei para poder criar meu perfil de teste
     public Response criar(@Valid UsuarioRequestDTO dto) {
-        Usuario usuario = UsuarioMapper.toEntity(dto);
-        Usuario usuarioCriado = service.create(usuario);
+        Usuario usuarioCriado = service.create(UsuarioMapper.toEntity(dto));
         return Response.status(Status.CREATED)
                 .entity(UsuarioMapper.toResponseDTO(usuarioCriado))
                 .build();
@@ -72,11 +66,9 @@ public class UsuarioResource {
     @PUT
     @Path("/{id}")
     @RolesAllowed("ADMIN")
-    public Response atualizar(@PathParam("id") Long id, @Valid UsuarioRequestDTO dto) {
-        Usuario usuario = UsuarioMapper.toEntity(dto);
-        service.update(id, usuario);
-        Usuario usuarioAtualizado = service.findById(id);
-        return Response.ok(UsuarioMapper.toResponseDTO(usuarioAtualizado)).build();
+    public Response atualizar(@PathParam("id") Long id, @Valid UsuarioUpdateRequestDTO dto) {
+        service.update(id, UsuarioMapper.toEntityFromUpdate(dto));
+        return Response.ok(UsuarioMapper.toResponseDTO(service.findById(id))).build();
     }
 
     @DELETE
