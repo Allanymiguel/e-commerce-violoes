@@ -45,6 +45,11 @@ public abstract class Violao {
     @Column(name = "ano_fabricacao")
     private Integer anoFabricacao;
 
+    @NotNull
+    @PositiveOrZero
+    @Column(name = "quantidade_estoque")
+    private Integer quantidadeEstoque;
+
     @Valid
     @ManyToOne
     @JoinColumn(name = "id_madeira")
@@ -92,6 +97,13 @@ public abstract class Violao {
     }
     public void setAnoFabricacao(Integer anoFabricacao) {
         this.anoFabricacao = anoFabricacao;
+    }
+
+    public Integer getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+    public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+        this.quantidadeEstoque = quantidadeEstoque;
     }
 
     public Madeira getMadeira() {

@@ -15,10 +15,10 @@ INSERT INTO acessorio (id, nome, descricao, quantidade_estoque, preco_unitario) 
 INSERT INTO acessorio (id, nome, descricao, quantidade_estoque, preco_unitario) VALUES (2, 'Correia', 'Correia de couro', 30, 49.90);
 
 -- JOINED inheritance: insert into parent table first, then child table
-INSERT INTO violao (id, nome, preco_base, ano_fabricacao, id_madeira, id_marca, id_perfil_braco) VALUES (1, 'Folk Steel', 1200.00, 2022, 1, 1, 1);
+INSERT INTO violao (id, nome, preco_base, ano_fabricacao, quantidade_estoque, id_madeira, id_marca, id_perfil_braco) VALUES (1, 'Folk Steel', 1200.00, 2022, 10, 1, 1, 1);
 INSERT INTO violoes_aco (id, tipo_cordas_aco) VALUES (1, 'LEVE');
 
-INSERT INTO violao (id, nome, preco_base, ano_fabricacao, id_madeira, id_marca, id_perfil_braco) VALUES (2, 'Classico Nylon', 900.00, 2023, 2, 2, 2);
+INSERT INTO violao (id, nome, preco_base, ano_fabricacao, quantidade_estoque, id_madeira, id_marca, id_perfil_braco) VALUES (2, 'Classico Nylon', 900.00, 2023, 5, 2, 2, 2);
 INSERT INTO violoes_nylon (id, tipo_cordas_nylon) VALUES (2, 'MEDIA');
 
 -- Mocked data for Violao_Acessorio (join table)
