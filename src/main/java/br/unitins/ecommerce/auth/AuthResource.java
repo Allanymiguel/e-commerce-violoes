@@ -24,4 +24,11 @@ public class AuthResource {
         AuthResponseDTO response = authService.login(dto);
         return Response.ok(response).build();
     }
+
+    @POST
+    @Path("/forgot-password")
+    public Response forgotPassword(@Valid ForgotPasswordRequestDTO dto) {
+        authService.forgotPassword(dto);
+        return Response.ok().build();
+    }
 }

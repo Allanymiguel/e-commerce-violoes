@@ -24,8 +24,16 @@ public class Usuario {
     @Column(unique = true, nullable = false)
     private String login;
 
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    // Placeholder; credenciais sao gerenciadas pelo Keycloak
     @Column(name = "senha_hash", nullable = false)
     private String senhaHash;
+
+    // UUID do usuario no Keycloak; vincula este registro ao usuario Keycloak correspondente
+    @Column(name = "keycloak_id")
+    private String keycloakId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -60,6 +68,14 @@ public class Usuario {
         this.login = login;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getSenhaHash() {
         return senhaHash;
     }
@@ -74,5 +90,13 @@ public class Usuario {
 
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
+    }
+
+    public String getKeycloakId() {
+        return keycloakId;
+    }
+
+    public void setKeycloakId(String keycloakId) {
+        this.keycloakId = keycloakId;
     }
 }

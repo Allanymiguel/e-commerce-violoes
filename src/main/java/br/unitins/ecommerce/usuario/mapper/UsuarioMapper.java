@@ -10,6 +10,7 @@ public class UsuarioMapper {
         Usuario usuario = new Usuario();
         usuario.setLogin(dto.login());
         usuario.setSenhaHash(dto.senha());
+        usuario.setEmail(dto.email());
         usuario.setPerfil(dto.perfil());
         return usuario;
     }
@@ -18,6 +19,7 @@ public class UsuarioMapper {
         return new UsuarioResponseDTO(
                 usuario.getId(),
                 usuario.getLogin(),
+                usuario.getEmail(),
                 usuario.getPerfil()
         );
     }
