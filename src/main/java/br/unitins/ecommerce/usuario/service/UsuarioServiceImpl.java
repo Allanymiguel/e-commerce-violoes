@@ -84,9 +84,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         String senhaPlaintext = usuario.getSenhaHash();
         String bearer = obterTokenAdmin();
 
+        String[] nomes = derivarFirstLastName(usuario);
         KeycloakCreateUserDTO kcUser = new KeycloakCreateUserDTO(
                 usuario.getLogin(),
                 usuario.getEmail(),
+                nomes[0],
+                nomes[1],
                 true,
                 true,
                 List.of());
@@ -113,7 +116,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
             // Clear any default required actions so the user can login immediately
             adminClient.atualizarUsuario(bearer, targetRealm, keycloakId,
-                    new KeycloakUpdateUserDTO(usuario.getLogin(), usuario.getEmail(), true, List.of()));
+                    new KeycloakUpdateUserDTO(usuario.getLogin(), usuario.getEmail(), nomes[0], nomes[1], true, List.of()));
 
             KeycloakRoleDTO role = adminClient.buscarRole(bearer, targetRealm, usuario.getPerfil().name());
             adminClient.atribuirRoles(bearer, targetRealm, keycloakId, List.of(role));
@@ -143,8 +146,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (u.getKeycloakId() != null) {
             String bearer = obterTokenAdmin();
 
+            String[] nomesUpd = derivarFirstLastName(usuario);
             adminClient.atualizarUsuario(bearer, targetRealm, u.getKeycloakId(),
-                    new KeycloakUpdateUserDTO(usuario.getLogin(), usuario.getEmail(), true, List.of()));
+                    new KeycloakUpdateUserDTO(usuario.getLogin(), usuario.getEmail(), nomesUpd[0], nomesUpd[1], true, List.of()));
 
             if (!u.getPerfil().equals(usuario.getPerfil())) {
                 KeycloakRoleDTO oldRole = adminClient.buscarRole(bearer, targetRealm, u.getPerfil().name());
@@ -174,6 +178,19 @@ public class UsuarioServiceImpl implements UsuarioService {
             adminClient.deletarUsuario(bearer, targetRealm, u.getKeycloakId());
         }
         repository.delete(u);
+    }
+
+    private String[] derivarFirstLastName(Usuario u) {
+        String nome = u.getNomeCompleto();
+        if (nome == null || nome.isBlank()) {
+            String fallback = u.getLogin() != null ? u.getLogin() : "Usuario";
+            return new String[] { fallback, fallback };
+        }
+        String[] partes = nome.trim().split("\\s+", 2);
+        if (partes.length == 1) {
+            return new String[] { partes[0], partes[0] };
+        }
+        return partes;
     }
 
     private String obterTokenAdmin() {

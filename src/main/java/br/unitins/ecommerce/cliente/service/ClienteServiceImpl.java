@@ -61,7 +61,15 @@ public class ClienteServiceImpl implements ClienteService {
         Usuario usuario = usuarioRepository.findByKeycloakId(keycloakId)
                 .orElseThrow(() -> new WebApplicationException("Usuario nao encontrado", Status.NOT_FOUND));
 
+        if (!dto.cpf().equals(usuario.getCpf())
+                && usuarioRepository.findByCpf(dto.cpf())
+                    .filter(outro -> !outro.getId().equals(usuario.getId()))
+                    .isPresent()) {
+            throw new WebApplicationException("CPF ja existe", Status.CONFLICT);
+        }
+
         usuario.setNomeCompleto(dto.nomeCompleto());
+        usuario.setCpf(dto.cpf());
         usuario.setTelefone(dto.telefone());
         usuario.setDataNascimento(dto.dataNascimento());
 
