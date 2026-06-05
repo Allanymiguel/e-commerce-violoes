@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import br.unitins.ecommerce.perfilBraco.dto.PerfilBracoRequestDTO;
 import br.unitins.ecommerce.perfilBraco.service.PerfilBracoService;
@@ -11,6 +12,7 @@ import br.unitins.ecommerce.perfilBraco.service.PerfilBracoService;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
+@TestSecurity(user = "test-admin", roles = {"ADMIN"})
 public class PerfilBracoResourceTest {
 
   @InjectMock

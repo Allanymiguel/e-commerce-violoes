@@ -3,6 +3,7 @@ package br.unitins.ecommerce.acessorio.resource;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import br.unitins.ecommerce.acessorio.dto.AcessorioRequestDTO;
 import br.unitins.ecommerce.acessorio.service.AcessorioService;
@@ -12,6 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 @QuarkusTest
+@TestSecurity(user = "test-admin", roles = {"ADMIN"})
 public class AcessorioResourceTest {
 
     @InjectMock

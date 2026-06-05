@@ -1,0 +1,25 @@
+# Copie este arquivo para application-test.properties e ajuste os valores ao seu ambiente.
+# O application-test.properties real eh gitignored para nao vazar credenciais.
+
+# Datasource para os testes (banco precisa estar rodando, mas nao e tocado pois services usam @InjectMock)
+quarkus.datasource.username=SEU_USUARIO_POSTGRES
+quarkus.datasource.password=SUA_SENHA_POSTGRES
+quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/topicos1_ecommerce
+quarkus.hibernate-orm.database.generation=update
+
+# Desliga validacao OIDC nos testes (nenhum teste valida JWT)
+quarkus.oidc.auth-server-url=http://localhost:8180/realms/ecommerce
+quarkus.oidc.client-id=ecommerce-app
+quarkus.oidc.credentials.secret=test-secret
+quarkus.oidc.tenant-enabled=false
+
+# REST clients (nao chamados nos testes, mas precisam estar definidos para o boot)
+quarkus.rest-client.keycloak-token.url=http://localhost:8180/realms/ecommerce
+quarkus.rest-client.keycloak-admin.url=http://localhost:8180
+
+keycloak.admin.server-url=http://localhost:8180
+keycloak.admin.realm=master
+keycloak.admin.client-id=admin-cli
+keycloak.admin.username=admin
+keycloak.admin.password=admin
+keycloak.admin.target-realm=ecommerce

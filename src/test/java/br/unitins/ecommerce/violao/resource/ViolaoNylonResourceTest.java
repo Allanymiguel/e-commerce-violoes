@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import br.unitins.ecommerce.violao.dto.ViolaoNylonRequestDTO;
 import br.unitins.ecommerce.violao.model.TipoCordasNylon;
@@ -12,6 +13,7 @@ import br.unitins.ecommerce.violao.service.ViolaoNylonService;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
+@TestSecurity(user = "test-admin", roles = {"ADMIN"})
 public class ViolaoNylonResourceTest {
 
     @InjectMock
@@ -39,9 +41,10 @@ public class ViolaoNylonResourceTest {
             "Acustico Yamaha",
             1500.0,
             2021,
-            TipoCordasNylon.MEDIA
+            TipoCordasNylon.MEDIA,
+            12
         );
-        
+
         given()
           .contentType(ContentType.JSON)
           .body(dto)
@@ -56,7 +59,8 @@ public class ViolaoNylonResourceTest {
             "Acustico Yamaha Updated",
             1600.0,
             2021,
-            TipoCordasNylon.ALTA
+            TipoCordasNylon.ALTA,
+            9
         );
         
         given()

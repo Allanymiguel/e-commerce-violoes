@@ -5,6 +5,7 @@ import org.mockito.Mockito;
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import br.unitins.ecommerce.marca.dto.MarcasRequestDTO;
 import br.unitins.ecommerce.marca.service.MarcasService;
@@ -12,6 +13,7 @@ import br.unitins.ecommerce.marca.service.MarcasService;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
+@TestSecurity(user = "test-admin", roles = {"ADMIN"})
 public class MarcasResourceTest {
 
   @InjectMock

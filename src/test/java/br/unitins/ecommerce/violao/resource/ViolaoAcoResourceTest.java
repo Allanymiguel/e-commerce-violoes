@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import br.unitins.ecommerce.violao.dto.ViolaoAcoRequestDTO;
 import br.unitins.ecommerce.violao.model.TipoCordasAco;
@@ -12,6 +13,7 @@ import br.unitins.ecommerce.violao.service.ViolaoAcoService;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
+@TestSecurity(user = "test-admin", roles = {"ADMIN"})
 public class ViolaoAcoResourceTest {
 
     @InjectMock
@@ -40,9 +42,10 @@ public class ViolaoAcoResourceTest {
             "Folk Taylor",
             1200.0,
             2022,
-            TipoCordasAco.MEDIA
+            TipoCordasAco.MEDIA,
+            10
         );
-        
+
         given()
           .contentType(ContentType.JSON)
           .body(dto)
@@ -57,7 +60,8 @@ public class ViolaoAcoResourceTest {
             "Folk Taylor Updated",
             1300.0,
             2023,
-            TipoCordasAco.LEVE
+            TipoCordasAco.LEVE,
+            8
         );
         
         given()
