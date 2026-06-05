@@ -6,5 +6,6 @@ public record KeycloakCreateUserDTO(
     String username,
     String email,
     boolean enabled,
-    List<KeycloakCredentialDTO> credentials
+    boolean emailVerified,
+    List<String> requiredActions
 ) {}

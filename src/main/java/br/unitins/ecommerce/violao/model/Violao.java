@@ -45,7 +45,6 @@ public abstract class Violao {
     @Column(name = "ano_fabricacao")
     private Integer anoFabricacao;
 
-    @NotNull
     @PositiveOrZero
     @Column(name = "quantidade_estoque")
     private Integer quantidadeEstoque;

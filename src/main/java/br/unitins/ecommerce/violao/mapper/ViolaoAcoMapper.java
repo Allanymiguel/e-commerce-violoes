@@ -12,6 +12,8 @@ public class ViolaoAcoMapper {
         v.setNome(dto.nome());
         v.setPrecoBase(dto.precoBase());
         v.setAnoFabricacao(dto.anoFabricacao());
+        v.setTipoCordasAco(dto.tipoCordasAco());
+        v.setQuantidadeEstoque(dto.quantidadeEstoque() != null ? dto.quantidadeEstoque() : 0);
         return v;
     }
 

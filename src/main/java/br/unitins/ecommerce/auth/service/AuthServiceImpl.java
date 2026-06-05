@@ -64,6 +64,14 @@ public class AuthServiceImpl implements AuthService {
             KeycloakTokenResponseDTO tokenResponse = tokenClient.obterToken(form);
             return new AuthResponseDTO(tokenResponse.getAccessToken(), "Bearer");
         } catch (WebApplicationException e) {
+            int status = e.getResponse().getStatus();
+            String body;
+            try {
+                body = e.getResponse().readEntity(String.class);
+            } catch (RuntimeException readErr) {
+                body = "<corpo indisponivel: " + readErr.getMessage() + ">";
+            }
+            Log.warnf("Falha no login Keycloak (login=%s) status=%d body=%s", dto.login(), status, body);
             throw new WebApplicationException("Credenciais invalidas", Status.UNAUTHORIZED);
         }
     }

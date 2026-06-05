@@ -6,7 +6,8 @@ public record ViolaoNylonRequestDTO(
     String nome,
     Double precoBase,
     Integer anoFabricacao,
-    TipoCordasNylon tipoCordasNylon
+    TipoCordasNylon tipoCordasNylon,
+    Integer quantidadeEstoque
 ) {
-    
+
 }

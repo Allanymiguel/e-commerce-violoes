@@ -8,11 +8,11 @@ public class ViolaoNylonMapper {
 
     public static ViolaoNylon toEntity(ViolaoNylonRequestDTO dto) {
         ViolaoNylon v = new ViolaoNylon();
-            v.setNome(dto.nome());
-            v.setPrecoBase(dto.precoBase());
-            v.setAnoFabricacao(dto.anoFabricacao());
-            v.setTipoCordasNylon(dto.tipoCordasNylon());
-
+        v.setNome(dto.nome());
+        v.setPrecoBase(dto.precoBase());
+        v.setAnoFabricacao(dto.anoFabricacao());
+        v.setTipoCordasNylon(dto.tipoCordasNylon());
+        v.setQuantidadeEstoque(dto.quantidadeEstoque() != null ? dto.quantidadeEstoque() : 0);
         return v;
     }
 

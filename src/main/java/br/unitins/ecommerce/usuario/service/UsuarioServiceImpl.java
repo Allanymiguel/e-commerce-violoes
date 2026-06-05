@@ -71,7 +71,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     public Usuario create(Usuario usuario) {
         if (repository.findByLogin(usuario.getLogin()).isPresent()) {
-            throw new WebApplicationException("Login ja existe", Status.BAD_REQUEST);
+            throw new WebApplicationException("Login ja existe", Status.CONFLICT);
+        }
+        if (repository.findByEmail(usuario.getEmail()).isPresent()) {
+            throw new WebApplicationException("Email ja existe", Status.CONFLICT);
+        }
+        if (usuario.getCpf() != null && repository.findByCpf(usuario.getCpf()).isPresent()) {
+            throw new WebApplicationException("CPF ja existe", Status.CONFLICT);
         }
 
         usuario.setPerfil(Perfil.CLIENTE);
@@ -82,7 +88,8 @@ public class UsuarioServiceImpl implements UsuarioService {
                 usuario.getLogin(),
                 usuario.getEmail(),
                 true,
-                List.of(new KeycloakCredentialDTO("password", senhaPlaintext, false)));
+                true,
+                List.of());
 
         Response response;
         try {
@@ -100,11 +107,26 @@ public class UsuarioServiceImpl implements UsuarioService {
         String keycloakId = location.substring(location.lastIndexOf('/') + 1);
         usuario.setKeycloakId(keycloakId);
 
-        KeycloakRoleDTO role = adminClient.buscarRole(bearer, targetRealm, usuario.getPerfil().name());
-        adminClient.atribuirRoles(bearer, targetRealm, keycloakId, List.of(role));
+        try {
+            adminClient.resetSenha(bearer, targetRealm, keycloakId,
+                    new KeycloakCredentialDTO("password", senhaPlaintext, false));
 
-        usuario.setSenhaHash("KC_MANAGED");
-        repository.persist(usuario);
+            // Clear any default required actions so the user can login immediately
+            adminClient.atualizarUsuario(bearer, targetRealm, keycloakId,
+                    new KeycloakUpdateUserDTO(usuario.getLogin(), usuario.getEmail(), true, List.of()));
+
+            KeycloakRoleDTO role = adminClient.buscarRole(bearer, targetRealm, usuario.getPerfil().name());
+            adminClient.atribuirRoles(bearer, targetRealm, keycloakId, List.of(role));
+
+            usuario.setSenhaHash("KC_MANAGED");
+            repository.persist(usuario);
+        } catch (RuntimeException e) {
+            try {
+                adminClient.deletarUsuario(bearer, targetRealm, keycloakId);
+            } catch (RuntimeException ignored) {
+            }
+            throw e;
+        }
         return usuario;
     }
 
@@ -122,7 +144,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             String bearer = obterTokenAdmin();
 
             adminClient.atualizarUsuario(bearer, targetRealm, u.getKeycloakId(),
-                    new KeycloakUpdateUserDTO(usuario.getLogin(), usuario.getEmail()));
+                    new KeycloakUpdateUserDTO(usuario.getLogin(), usuario.getEmail(), true, List.of()));
 
             if (!u.getPerfil().equals(usuario.getPerfil())) {
                 KeycloakRoleDTO oldRole = adminClient.buscarRole(bearer, targetRealm, u.getPerfil().name());
