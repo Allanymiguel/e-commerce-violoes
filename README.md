@@ -55,8 +55,36 @@ Aplicação em http://localhost:8080
 
 Os testes usam `@InjectMock` nos services, então não tocam o banco. Precisam apenas que o Postgres esteja **acessível** para o Quarkus subir.
 
-## Fluxo de cadastro/login
+## Dados de teste
 
-1. `POST /usuarios/completo` — cria usuário com dados completos (login, senha, email, nomeCompleto, cpf, telefone, dataNascimento). O cadastro cria o usuário também no Keycloak e atribui a role CLIENTE.
-2. `POST /auth/login` — retorna o `access_token` para usar em `Authorization: Bearer <token>` nos endpoints protegidos.
-3. Endpoints com `@RolesAllowed("CLIENTE")` ou `@RolesAllowed("ADMIN")` exigem o token correspondente.
+O arquivo `src/main/resources/import.sql` já popula o banco com 2 madeiras, 2 marcas, 2 perfis de braço, 2 acessórios e 2 violões (1 aço + 1 nylon). Isso é suficiente para testar todos os endpoints **públicos** de catálogo (`/produtos`, `/violoes/...`, `/acessorios/listar`, `/madeiras/listar`, `/marcas/listar`, `/perfis-braco/listar`).
+
+Usuários NÃO podem ser inseridos via `import.sql` porque a autenticação fica no Keycloak, não no banco da aplicação. Para testar endpoints autenticados, siga o roteiro abaixo.
+
+## Roteiro de teste no Swagger
+
+Abra http://localhost:8080/q/swagger-ui e execute na ordem:
+
+1. **Criar um cliente**: `POST /usuarios/completo` com um body como:
+   ```json
+   {
+     "login": "Teste01",
+     "senha": "teste123",
+     "email": "teste01@example.com",
+     "nomeCompleto": "Teste Sobrenome",
+     "cpf": "09669090114",
+     "telefone": "63912345678",
+     "dataNascimento": "2000-01-01"
+   }
+   ```
+   Isso cria o usuário no banco e no Keycloak já com a role `CLIENTE`.
+
+2. **Logar**: `POST /auth/login` com `{ "login": "Teste01", "senha": "teste123" }`. Copie o `accessToken`.
+
+3. No Swagger, clique em **Authorize** (canto superior direito) e cole `Bearer <accessToken>`. A partir daí, todos os endpoints autenticados respondem.
+
+4. Endpoints disponíveis pro cliente: `PUT /clientes/me`, `POST/GET /clientes/enderecos`, `POST/GET /clientes/pedidos`, `POST/GET/DELETE /clientes/lista-desejos`.
+
+5. Para testar endpoints **ADMIN** (cadastrar/atualizar/deletar do catálogo), promova o usuário no Keycloak:
+   - Admin Console → realm `ecommerce` → Users → seu usuário → **Role mapping** → Assign role → marque `ADMIN`.
+   - Faça `POST /auth/login` de novo para receber um token novo já com a role `ADMIN`.
